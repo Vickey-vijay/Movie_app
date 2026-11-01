@@ -36,8 +36,19 @@ jobs:
 
   smoke:
     needs: build
+    name: smoke (api ${{ matrix.api }} ${{ matrix.target }})
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        # The app ships ARM-only native libraries, so the emulator image must include ARM translation.
+        # Which images do is not documented reliably, so try a few; the control run says which work.
+        include:
+          - { api: 30, target: google_apis }
+          - { api: 30, target: google_apis_playstore }
+          - { api: 33, target: google_apis_playstore }
+          - { api: 34, target: google_apis_playstore }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -49,15 +60,15 @@ jobs:
           sudo udevadm trigger --name-match=kvm
       - uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
+          api-level: ${{ matrix.api }}
           arch: x86_64
-          target: google_apis
+          target: ${{ matrix.target }}
           disable-animations: true
           script: bash noads/ci/smoke-all.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: smoke-output
+          name: smoke-output-${{ matrix.api }}-${{ matrix.target }}
           path: smoke-out/
           if-no-files-found: ignore
 
