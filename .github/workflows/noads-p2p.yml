@@ -20,7 +20,10 @@ jobs:
         with: { distribution: temurin, java-version: '17' }
       - name: Put Android build-tools (apksigner) on PATH
         run: echo "$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)" >> "$GITHUB_PATH"
-      - run: bash noads/build.sh
+      - name: Build the patched APK and a re-signed-only copy (original code, new signature)
+        run: |
+          bash noads/build.sh
+          NO_PATCH=1 WORK=build/work-resign OUT=build/resigned-only.apk bash noads/build.sh
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules

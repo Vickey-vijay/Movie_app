@@ -18,8 +18,12 @@ javac -nowarn -cp "$WORK/lib/*" -d "$WORK/classes" "$HERE"/tools/DexPatch.java "
 echo "== 2/6 extract the original DEX files"
 unzip -q -o "$APK_IN" 'classes*.dex' -d "$WORK/dex-in"
 
+if [ "${NO_PATCH:-0}" = "1" ]; then
+  echo "== 3/6 NO_PATCH=1: DEX left untouched (re-sign only, for diagnostics)"; mkdir -p "$WORK/dex-out"; cp "$WORK"/dex-in/classes*.dex "$WORK/dex-out/"
+else
 echo "== 3/6 patch DEX in place ($(grep -cv '^#\|^$' "$HERE/patches/noads.spec") edits)"
 java -cp "$WORK/classes:$WORK/lib/*" DexPatch "$WORK/dex-in" "$HERE/patches/noads.spec" "$WORK/dex-out" 2>&1 | grep -v 'Picked up' | grep -E '^(patched|DONE|REFUSING)'
+fi
 
 echo "== 4/6 repack (alignment-preserving)"
 python3 -I "$HERE/tools/repack.py" "$APK_IN" "$WORK/dex-out" "$WORK/unsigned.apk"

@@ -5,6 +5,7 @@
 set -u
 PKG=com.fvvcl.flickverse; ACT="$PKG/com.mgs.carparking.ui.login.splash.SplashActivity"
 ORIG="${ORIG:-apk-original/Moviecom.fvvcl.flickversevV4.0.0.apk}"; PATCHED="${PATCHED:-build/Flickverse-V4.0.0-noads.apk}"
+RESIGNED="${RESIGNED:-build/resigned-only.apk}"   # original code, signed with the throw-away key: isolates signature from code edits
 mkdir -p p2p-out
 run_one() {
   label=$1; apk=$2
@@ -20,7 +21,7 @@ run_one() {
 }
 adb wait-for-device
 echo "emulator: sdk=$(adb shell getprop ro.build.version.sdk | tr -d '\r')"
-run_one patched-first "$PATCHED"
+# Already known: patched => port -1 (twice), original => 7000 (twice). Now isolate the cause:
+run_one resigned-only-first "$RESIGNED"   # original code + NEW signature
 run_one original "$ORIG"
-run_one patched-again "$PATCHED"
-run_one original-again "$ORIG"
+run_one resigned-only-again "$RESIGNED"
