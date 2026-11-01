@@ -1,0 +1,37 @@
+package hh;
+
+import io.bidmachine.media3.extractor.ConstantBitrateSeekMap;
+import io.bidmachine.media3.extractor.MpegAudioUtil;
+import io.bidmachine.media3.extractor.mp3.Seeker;
+
+/* JADX INFO: compiled from: ConstantBitrateSeeker.java */
+/* JADX INFO: loaded from: classes11.dex */
+public final class a extends ConstantBitrateSeekMap implements Seeker {
+    private final int bitrate;
+    private final long dataEndPosition;
+
+    public a(long j10, long j11, MpegAudioUtil.Header header, boolean z10) {
+        this(j10, j11, header.bitrate, header.frameSize, z10);
+    }
+
+    public a(long j10, long j11, int i10, int i11, boolean z10) {
+        super(j10, j11, i10, i11, z10);
+        this.bitrate = i10;
+        this.dataEndPosition = j10 == -1 ? -1L : j10;
+    }
+
+    @Override // io.bidmachine.media3.extractor.mp3.Seeker
+    public int getAverageBitrate() {
+        return this.bitrate;
+    }
+
+    @Override // io.bidmachine.media3.extractor.mp3.Seeker
+    public long getDataEndPosition() {
+        return this.dataEndPosition;
+    }
+
+    @Override // io.bidmachine.media3.extractor.mp3.Seeker
+    public long getTimeUs(long j10) {
+        return getTimeUsAtPosition(j10);
+    }
+}

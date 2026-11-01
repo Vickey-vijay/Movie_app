@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.qq.e.ads.nativ.widget.NativeAdContainer
+        android:id="@+id/main_gdt_nativeAdContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.qq.e.ads.nativ.MediaView
+            android:id="@+id/main_gdt_mMediaView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/main_gdt_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.qq.e.ads.nativ.widget.NativeAdContainer>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textSize="16sp"
+            android:textColor="@color/main_white"
+            android:gravity="center"
+            android:id="@+id/main_txt_show_forward"
+            android:background="@drawable/main_bg_custom_gdt_native_btn"
+            android:visibility="invisible"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="100dp"
+            android:text="@string/main_forward_detail"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,31 @@
+package com.google.android.gms.ads;
+
+import android.graphics.drawable.Drawable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.gms.internal.ads.zzblm;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads-api@@24.9.0 */
+/* JADX INFO: loaded from: classes9.dex */
+public interface MediaContent {
+    float getAspectRatio();
+
+    float getCurrentTime();
+
+    float getDuration();
+
+    @Nullable
+    Drawable getMainImage();
+
+    @NonNull
+    VideoController getVideoController();
+
+    boolean hasVideoContent();
+
+    void setMainImage(@Nullable Drawable drawable);
+
+    boolean zza();
+
+    @Nullable
+    zzblm zzb();
+}

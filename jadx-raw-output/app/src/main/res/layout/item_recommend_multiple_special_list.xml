@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:tag="layout/item_recommend_multiple_special_list_0"
+    android:background="@color/theme_bg_color"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            android:textColor="@color/color_text_commen1"
+            android:id="@+id/tv_title"
+            android:tag="binding_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"/>
+        <ImageView
+            android:visibility="gone"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_12"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:src="@drawable/ic_home_right"
+            android:layout_toRightOf="@+id/tv_title"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list"
+        android:tag="binding_2"
+        android:background="@color/theme_bg_color"
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"/>
+</LinearLayout>

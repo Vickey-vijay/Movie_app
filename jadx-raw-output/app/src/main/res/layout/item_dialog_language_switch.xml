@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_click"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_50">
+    <TextView
+        android:textSize="@dimen/sp_13"
+        android:textColor="@color/white"
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/dp_16"/>
+</RelativeLayout>

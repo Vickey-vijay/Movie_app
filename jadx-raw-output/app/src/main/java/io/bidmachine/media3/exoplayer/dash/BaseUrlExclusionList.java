@@ -1,0 +1,161 @@
+package io.bidmachine.media3.exoplayer.dash;
+
+import android.os.SystemClock;
+import android.util.Pair;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import com.google.common.collect.y1;
+import io.bidmachine.media3.common.util.UnstableApi;
+import io.bidmachine.media3.common.util.Util;
+import io.bidmachine.media3.exoplayer.dash.BaseUrlExclusionList;
+import io.bidmachine.media3.exoplayer.dash.manifest.BaseUrl;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+/* JADX INFO: loaded from: classes3.dex */
+@UnstableApi
+public final class BaseUrlExclusionList {
+    private final Map<Integer, Long> excludedPriorities;
+    private final Map<String, Long> excludedServiceLocations;
+    private final Random random;
+    private final Map<List<Pair<String, Integer>>, BaseUrl> selectionsTaken;
+
+    public BaseUrlExclusionList() {
+        this(new Random());
+    }
+
+    private BaseUrl selectWeighted(List<BaseUrl> list) {
+        int i10 = 0;
+        for (int i11 = 0; i11 < list.size(); i11++) {
+            i10 += list.get(i11).weight;
+        }
+        int iNextInt = this.random.nextInt(i10);
+        int i12 = 0;
+        for (int i13 = 0; i13 < list.size(); i13++) {
+            BaseUrl baseUrl = list.get(i13);
+            i12 += baseUrl.weight;
+            if (iNextInt < i12) {
+                return baseUrl;
+            }
+        }
+        return (BaseUrl) y1.f(list);
+    }
+
+    @VisibleForTesting
+    public BaseUrlExclusionList(Random random) {
+        this.selectionsTaken = new HashMap();
+        this.random = random;
+        this.excludedServiceLocations = new HashMap();
+        this.excludedPriorities = new HashMap();
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public static int compareBaseUrl(BaseUrl baseUrl, BaseUrl baseUrl2) {
+        int iCompare = Integer.compare(baseUrl.priority, baseUrl2.priority);
+        return iCompare != 0 ? iCompare : baseUrl.serviceLocation.compareTo(baseUrl2.serviceLocation);
+    }
+
+    public static int getPriorityCount(List<BaseUrl> list) {
+        HashSet hashSet = new HashSet();
+        for (int i10 = 0; i10 < list.size(); i10++) {
+            hashSet.add(Integer.valueOf(list.get(i10).priority));
+        }
+        return hashSet.size();
+    }
+
+    private static <T> void removeExpiredExclusions(long j10, Map<T, Long> map) {
+        ArrayList arrayList = new ArrayList();
+        for (Map.Entry<T, Long> entry : map.entrySet()) {
+            if (entry.getValue().longValue() <= j10) {
+                arrayList.add(entry.getKey());
+            }
+        }
+        for (int i10 = 0; i10 < arrayList.size(); i10++) {
+            map.remove(arrayList.get(i10));
+        }
+    }
+
+    public int getPriorityCountAfterExclusion(List<BaseUrl> list) {
+        HashSet hashSet = new HashSet();
+        List<BaseUrl> listApplyExclusions = applyExclusions(list);
+        for (int i10 = 0; i10 < listApplyExclusions.size(); i10++) {
+            hashSet.add(Integer.valueOf(listApplyExclusions.get(i10).priority));
+        }
+        return hashSet.size();
+    }
+
+    public void reset() {
+        this.excludedServiceLocations.clear();
+        this.excludedPriorities.clear();
+        this.selectionsTaken.clear();
+    }
+
+    private static <T> void addExclusion(T t10, long j10, Map<T, Long> map) {
+        if (map.containsKey(t10)) {
+            j10 = Math.max(j10, ((Long) Util.castNonNull(map.get(t10))).longValue());
+        }
+        map.put(t10, Long.valueOf(j10));
+    }
+
+    private List<BaseUrl> applyExclusions(List<BaseUrl> list) {
+        long jElapsedRealtime = SystemClock.elapsedRealtime();
+        removeExpiredExclusions(jElapsedRealtime, this.excludedServiceLocations);
+        removeExpiredExclusions(jElapsedRealtime, this.excludedPriorities);
+        ArrayList arrayList = new ArrayList();
+        for (int i10 = 0; i10 < list.size(); i10++) {
+            BaseUrl baseUrl = list.get(i10);
+            if (!this.excludedServiceLocations.containsKey(baseUrl.serviceLocation) && !this.excludedPriorities.containsKey(Integer.valueOf(baseUrl.priority))) {
+                arrayList.add(baseUrl);
+            }
+        }
+        return arrayList;
+    }
+
+    public void exclude(BaseUrl baseUrl, long j10) {
+        long jElapsedRealtime = SystemClock.elapsedRealtime() + j10;
+        addExclusion(baseUrl.serviceLocation, jElapsedRealtime, this.excludedServiceLocations);
+        int i10 = baseUrl.priority;
+        if (i10 != Integer.MIN_VALUE) {
+            addExclusion(Integer.valueOf(i10), jElapsedRealtime, this.excludedPriorities);
+        }
+    }
+
+    @Nullable
+    public BaseUrl selectBaseUrl(List<BaseUrl> list) {
+        List<BaseUrl> listApplyExclusions = applyExclusions(list);
+        if (listApplyExclusions.size() < 2) {
+            return (BaseUrl) y1.e(listApplyExclusions, null);
+        }
+        Collections.sort(listApplyExclusions, new Comparator() { // from class: fg.a
+            @Override // java.util.Comparator
+            public final int compare(Object obj, Object obj2) {
+                return BaseUrlExclusionList.compareBaseUrl((BaseUrl) obj, (BaseUrl) obj2);
+            }
+        });
+        ArrayList arrayList = new ArrayList();
+        int i10 = listApplyExclusions.get(0).priority;
+        for (int i11 = 0; i11 < listApplyExclusions.size(); i11++) {
+            BaseUrl baseUrl = listApplyExclusions.get(i11);
+            if (i10 != baseUrl.priority) {
+                if (arrayList.size() != 1) {
+                    break;
+                }
+                return listApplyExclusions.get(0);
+            }
+            arrayList.add(new Pair(baseUrl.serviceLocation, Integer.valueOf(baseUrl.weight)));
+        }
+        BaseUrl baseUrl2 = this.selectionsTaken.get(arrayList);
+        if (baseUrl2 == null) {
+            BaseUrl baseUrlSelectWeighted = selectWeighted(listApplyExclusions.subList(0, arrayList.size()));
+            this.selectionsTaken.put(arrayList, baseUrlSelectWeighted);
+            return baseUrlSelectWeighted;
+        }
+        return baseUrl2;
+    }
+}

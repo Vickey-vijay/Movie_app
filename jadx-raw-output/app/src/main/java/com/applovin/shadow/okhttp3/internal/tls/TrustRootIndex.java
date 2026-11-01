@@ -1,0 +1,9 @@
+package com.applovin.shadow.okhttp3.internal.tls;
+
+import java.security.cert.X509Certificate;
+
+/* JADX INFO: compiled from: TrustRootIndex.kt */
+/* JADX INFO: loaded from: classes4.dex */
+public interface TrustRootIndex {
+    X509Certificate findByIssuerAndSignature(X509Certificate x509Certificate);
+}

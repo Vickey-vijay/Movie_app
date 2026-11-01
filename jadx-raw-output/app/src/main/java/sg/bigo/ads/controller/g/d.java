@@ -1,0 +1,44 @@
+package sg.bigo.ads.controller.g;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import org.json.JSONObject;
+
+/* JADX INFO: loaded from: classes11.dex */
+public final class d {
+    @Nullable
+    public static String a(@Nullable sg.bigo.ads.api.b bVar, @NonNull sg.bigo.ads.common.g gVar) {
+        long jH;
+        int iG;
+        int iF = 0;
+        if (bVar != null) {
+            iF = bVar.f69322d;
+            iG = bVar.f69323e;
+            jH = bVar.f69324f;
+        } else {
+            jH = 0;
+            iG = 0;
+        }
+        if (iF <= 0) {
+            iF = gVar.f();
+        }
+        if (iG <= 0) {
+            iG = gVar.g();
+        }
+        if (jH <= 0) {
+            jH = gVar.h();
+        }
+        try {
+            JSONObject jSONObject = new JSONObject();
+            jSONObject.putOpt("ad_a", Integer.valueOf(iF));
+            jSONObject.putOpt("ad_g", Integer.valueOf(iG));
+            jSONObject.putOpt("ad_channel", gVar.e());
+            jSONObject.putOpt("ad_active", Long.valueOf(jH));
+            jSONObject.putOpt("ad_ins", Long.valueOf(gVar.Y()));
+            jSONObject.putOpt("ad_upd", Long.valueOf(gVar.Z()));
+            return jSONObject.toString();
+        } catch (Exception unused) {
+            return null;
+        }
+    }
+}

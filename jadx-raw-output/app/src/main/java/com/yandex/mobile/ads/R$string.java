@@ -1,0 +1,124 @@
+package com.yandex.mobile.ads;
+
+/* JADX INFO: loaded from: classes8.dex */
+public final class R$string {
+    public static final int ad_units = 2131886108;
+    public static final int ads_sdk_version = 2131886109;
+    public static final int advertisement_network_settings = 2131886110;
+    public static final int age_restricted_user = 2131886111;
+    public static final int api_level = 2131886113;
+    public static final int app_id = 2131886114;
+    public static final int app_review_status = 2131886116;
+    public static final int app_version = 2131886117;
+    public static final int application_info = 2131886119;
+    public static final int call_notification_answer_action = 2131886185;
+    public static final int call_notification_answer_video_action = 2131886186;
+    public static final int call_notification_decline_action = 2131886187;
+    public static final int call_notification_hang_up_action = 2131886188;
+    public static final int call_notification_incoming_text = 2131886189;
+    public static final int call_notification_ongoing_text = 2131886190;
+    public static final int call_notification_screening_text = 2131886191;
+    public static final int common_google_play_services_enable_button = 2131886225;
+    public static final int common_google_play_services_enable_text = 2131886226;
+    public static final int common_google_play_services_enable_title = 2131886227;
+    public static final int common_google_play_services_install_button = 2131886228;
+    public static final int common_google_play_services_install_text = 2131886229;
+    public static final int common_google_play_services_install_title = 2131886230;
+    public static final int common_google_play_services_notification_channel_name = 2131886231;
+    public static final int common_google_play_services_notification_ticker = 2131886232;
+    public static final int common_google_play_services_unknown_issue = 2131886233;
+    public static final int common_google_play_services_unsupported_text = 2131886234;
+    public static final int common_google_play_services_update_button = 2131886235;
+    public static final int common_google_play_services_update_text = 2131886236;
+    public static final int common_google_play_services_update_title = 2131886237;
+    public static final int common_google_play_services_updating_text = 2131886238;
+    public static final int common_google_play_services_wear_update_text = 2131886239;
+    public static final int common_open_on_phone = 2131886240;
+    public static final int common_signin_button_text = 2131886241;
+    public static final int common_signin_button_text_long = 2131886242;
+    public static final int completed_integration = 2131886243;
+    public static final int debug_panel_ad_unit_format = 2131886255;
+    public static final int debug_panel_ad_unit_id = 2131886256;
+    public static final int disable = 2131886261;
+    public static final int div_slider_range_end = 2131886262;
+    public static final int div_slider_range_start = 2131886263;
+    public static final int do_you_want_to_enable_logging = 2131886272;
+    public static final int enable = 2131886291;
+    public static final int exo_download_completed = 2131886319;
+    public static final int exo_download_description = 2131886320;
+    public static final int exo_download_downloading = 2131886321;
+    public static final int exo_download_failed = 2131886322;
+    public static final int exo_download_notification_channel_name = 2131886323;
+    public static final int exo_download_paused = 2131886324;
+    public static final int exo_download_paused_for_network = 2131886325;
+    public static final int exo_download_paused_for_wifi = 2131886326;
+    public static final int exo_download_removing = 2131886327;
+    public static final int features = 2131886361;
+    public static final int has_location_consent = 2131886363;
+    public static final int has_user_consent = 2131886364;
+    public static final int integrated = 2131886379;
+    public static final int integration_errors = 2131886380;
+    public static final int invalid_integration = 2131886381;
+    public static final int invalid_mediation_adapter_version = 2131886382;
+    public static final int logging_is_disabled = 2131886393;
+    public static final int logging_is_enabled = 2131886394;
+    public static final int missing_integration = 2131886494;
+    public static final int monetization_ads_internal_after_timer_value = 2131886495;
+    public static final int monetization_ads_internal_before_timer_value = 2131886496;
+    public static final int monetization_ads_internal_go = 2131886497;
+    public static final int monetization_ads_internal_install = 2131886498;
+    public static final int monetization_ads_internal_install_from_google_play = 2131886499;
+    public static final int monetization_ads_internal_instream_ad_position = 2131886500;
+    public static final int monetization_ads_internal_instream_call_to_action = 2131886501;
+    public static final int monetization_ads_internal_instream_feedback = 2131886502;
+    public static final int monetization_ads_internal_instream_muted = 2131886503;
+    public static final int monetization_ads_internal_instream_skip = 2131886504;
+    public static final int monetization_ads_internal_instream_sponsored_default = 2131886505;
+    public static final int monetization_ads_internal_instream_sponsored_social = 2131886506;
+    public static final int monetization_ads_internal_instream_unmuted = 2131886507;
+    public static final int monetization_ads_internal_mediation_sponsored_text = 2131886508;
+    public static final int monetization_ads_internal_rewarded_close_verification_button_close = 2131886509;
+    public static final int monetization_ads_internal_rewarded_close_verification_button_dismiss = 2131886510;
+    public static final int monetization_ads_internal_rewarded_close_verification_text = 2131886511;
+    public static final int monetization_ads_internal_rewarded_close_verification_title = 2131886512;
+    public static final int monetization_ads_internal_scan_qrcode = 2131886513;
+    public static final int monetization_ads_internal_text_divider = 2131886514;
+    public static final int monetization_ads_internal_text_divider_with_space = 2131886515;
+    public static final int monetization_ads_internal_tools_age_text = 2131886516;
+    public static final int monetization_ads_internal_tools_app_install_call_to_action_text = 2131886517;
+    public static final int monetization_ads_internal_tools_app_install_call_to_action_text_large = 2131886518;
+    public static final int monetization_ads_internal_tools_body_text = 2131886519;
+    public static final int monetization_ads_internal_tools_call_to_action_text = 2131886520;
+    public static final int monetization_ads_internal_tools_domain_text = 2131886521;
+    public static final int monetization_ads_internal_tools_price_text = 2131886522;
+    public static final int monetization_ads_internal_tools_rating_text = 2131886523;
+    public static final int monetization_ads_internal_tools_review_count_text = 2131886524;
+    public static final int monetization_ads_internal_tools_sponsored_text = 2131886525;
+    public static final int monetization_ads_internal_tools_title_text = 2131886526;
+    public static final int monetization_ads_internal_tools_warning_text = 2131886527;
+    public static final int monetization_ads_mediation_api_sponsored_text = 2131886528;
+
+    /* JADX INFO: renamed from: no, reason: collision with root package name */
+    public static final int f50955no = 2131886571;
+    public static final int no_value_set = 2131886572;
+    public static final int not_integrated = 2131886573;
+
+    /* JADX INFO: renamed from: ok, reason: collision with root package name */
+    public static final int f50956ok = 2131886585;
+    public static final int provided = 2131886592;
+    public static final int sdk_integration = 2131886678;
+    public static final int sdk_integration_status = 2131886679;
+    public static final int sdk_undefined = 2131886680;
+    public static final int status_bar_notification_info_overflow = 2131886702;
+    public static final int system = 2131886857;
+    public static final int tcf_consent = 2131886858;
+    public static final int user_privacy = 2131887081;
+    public static final int yandex_mobileads_age_restricted_user = 2131887083;
+    public static final int yandex_mobileads_appmetrica_easy_integration_enabled = 2131887084;
+    public static final int yandex_mobileads_automatic_sdk_initialization = 2131887085;
+    public static final int yandex_mobileads_enable_logging = 2131887086;
+    public static final int yes = 2131887087;
+
+    private R$string() {
+    }
+}

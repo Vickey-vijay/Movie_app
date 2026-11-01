@@ -1,0 +1,11 @@
+package com.applovin.shadow.okhttp3;
+
+import java.io.IOException;
+
+/* JADX INFO: compiled from: Callback.kt */
+/* JADX INFO: loaded from: classes11.dex */
+public interface Callback {
+    void onFailure(Call call, IOException iOException);
+
+    void onResponse(Call call, Response response) throws IOException;
+}

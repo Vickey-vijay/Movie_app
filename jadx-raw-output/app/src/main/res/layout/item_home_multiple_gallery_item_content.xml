@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/theme_bg_color"
+    android:layout_width="@dimen/dp_131"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="@dimen/dp_131"
+        android:layout_height="@dimen/dp_199">
+        <com.mgs.carparking.widgets.cardbanner.view.RoundedImageView
+            android:id="@+id/item_img"
+            android:layout_width="@dimen/dp_131"
+            android:layout_height="@dimen/dp_199"
+            android:src="@drawable/ic_video_default"
+            android:scaleType="fitXY"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"/>
+        <TextView
+            android:textSize="@dimen/sp_11"
+            android:textStyle="bold"
+            android:textColor="@color/color_0feb33"
+            android:id="@+id/tv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
+            android:layout_marginRight="@dimen/dp_4"
+            android:layout_marginBottom="@dimen/dp_4"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <TextView
+        android:textSize="@dimen/sp_13"
+        android:textColor="@color/color_text_commen1"
+        android:ellipsize="end"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:text="斗破苍穹"
+        android:maxLines="1"/>
+</LinearLayout>

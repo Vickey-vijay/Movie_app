@@ -1,0 +1,81 @@
+package com.yandex.div;
+
+/* JADX INFO: loaded from: classes4.dex */
+public final class R$dimen {
+    public static final int div_button_height = 2131165384;
+    public static final int div_button_image_size = 2131165385;
+    public static final int div_button_text_horizontal_image_padding = 2131165386;
+    public static final int div_button_text_horizontal_padding = 2131165387;
+    public static final int div_button_text_vertical_padding = 2131165388;
+    public static final int div_compound_drawable_padding = 2131165389;
+    public static final int div_compound_drawable_vertical_padding = 2131165390;
+    public static final int div_footer_image_size = 2131165391;
+    public static final int div_horizontal_padding = 2131165392;
+    public static final int div_horizontal_padding_l = 2131165393;
+    public static final int div_horizontal_padding_m = 2131165394;
+    public static final int div_horizontal_padding_s = 2131165395;
+    public static final int div_indicator_corner_radius = 2131165396;
+    public static final int div_indicator_default_gap = 2131165397;
+    public static final int div_indicator_default_height = 2131165398;
+    public static final int div_indicator_default_width = 2131165399;
+    public static final int div_indicator_minimum_width = 2131165400;
+    public static final int div_indicator_selected_width = 2131165401;
+    public static final int div_padding_zero = 2131165402;
+    public static final int div_separator_delimiter_height = 2131165403;
+    public static final int div_shadow_elevation = 2131165404;
+    public static final int div_style_text_letter_spacing_button = 2131165405;
+    public static final int div_style_text_letter_spacing_card_header = 2131165406;
+    public static final int div_style_text_letter_spacing_no = 2131165407;
+    public static final int div_style_text_letter_spacing_numbers_l = 2131165408;
+    public static final int div_style_text_letter_spacing_numbers_m = 2131165409;
+    public static final int div_style_text_letter_spacing_numbers_s = 2131165410;
+    public static final int div_style_text_line_space_extra_card_header = 2131165411;
+    public static final int div_style_text_line_space_extra_no = 2131165412;
+    public static final int div_style_text_line_space_extra_numbers_l = 2131165413;
+    public static final int div_style_text_line_space_extra_numbers_m = 2131165414;
+    public static final int div_style_text_line_space_extra_numbers_s = 2131165415;
+    public static final int div_style_text_line_space_extra_text_l = 2131165416;
+    public static final int div_style_text_line_space_extra_text_m = 2131165417;
+    public static final int div_style_text_line_space_extra_text_s = 2131165418;
+    public static final int div_style_text_line_space_extra_title_l = 2131165419;
+    public static final int div_style_text_line_space_extra_title_m = 2131165420;
+    public static final int div_style_text_line_space_extra_title_s = 2131165421;
+    public static final int div_style_text_size_button = 2131165422;
+    public static final int div_style_text_size_card_header = 2131165423;
+    public static final int div_style_text_size_numbers_l = 2131165424;
+    public static final int div_style_text_size_numbers_m = 2131165425;
+    public static final int div_style_text_size_numbers_s = 2131165426;
+    public static final int div_style_text_size_text_l = 2131165427;
+    public static final int div_style_text_size_text_m = 2131165428;
+    public static final int div_style_text_size_text_s = 2131165429;
+    public static final int div_style_text_size_title_l = 2131165430;
+    public static final int div_style_text_size_title_m = 2131165431;
+    public static final int div_style_text_size_title_s = 2131165432;
+    public static final int div_table_image_size_l = 2131165433;
+    public static final int div_table_image_size_m = 2131165434;
+    public static final int div_table_image_size_s = 2131165435;
+    public static final int div_table_image_size_xl = 2131165436;
+    public static final int div_table_image_size_xs = 2131165437;
+    public static final int div_table_image_size_xxl = 2131165438;
+    public static final int div_table_padding_l = 2131165439;
+    public static final int div_table_padding_m = 2131165440;
+    public static final int div_table_padding_s = 2131165441;
+    public static final int div_table_padding_xl = 2131165442;
+    public static final int div_table_padding_xs = 2131165443;
+    public static final int div_table_padding_xxl = 2131165444;
+    public static final int div_table_padding_xxs = 2131165445;
+    public static final int div_table_padding_zero = 2131165446;
+    public static final int div_text_size_m = 2131165447;
+    public static final int div_text_size_s = 2131165448;
+    public static final int overflow_menu_margin_horizontal = 2131166112;
+    public static final int overflow_menu_margin_vertical = 2131166113;
+    public static final int overflow_menu_size = 2131166114;
+    public static final int tab_scrollable_min_width = 2131166130;
+    public static final int title_tab_title_height = 2131166145;
+    public static final int title_tab_title_margin_horizontal = 2131166146;
+    public static final int title_tab_title_margin_vertical = 2131166147;
+    public static final int title_tab_title_separator_margin_top = 2131166148;
+
+    private R$dimen() {
+    }
+}

@@ -1,0 +1,26 @@
+package com.google.android.gms.internal.ads;
+
+import com.google.android.gms.common.util.Clock;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads@@24.9.0 */
+/* JADX INFO: loaded from: classes2.dex */
+public final class zzdyd implements zzikg {
+    private final zzikp zza;
+    private final zzikp zzb;
+    private final zzikp zzc;
+
+    private zzdyd(zzikp zzikpVar, zzikp zzikpVar2, zzikp zzikpVar3) {
+        this.zza = zzikpVar;
+        this.zzb = zzikpVar2;
+        this.zzc = zzikpVar3;
+    }
+
+    public static zzdyd zza(zzikp zzikpVar, zzikp zzikpVar2, zzikp zzikpVar3) {
+        return new zzdyd(zzikpVar, zzikpVar2, zzikpVar3);
+    }
+
+    @Override // com.google.android.gms.internal.ads.zzikv, com.google.android.gms.internal.ads.zziku
+    public final /* bridge */ /* synthetic */ Object zzb() {
+        return new zzdyc((zzdxt) this.zza.zzb(), ((zziks) this.zzb).zzb(), (Clock) this.zzc.zzb());
+    }
+}

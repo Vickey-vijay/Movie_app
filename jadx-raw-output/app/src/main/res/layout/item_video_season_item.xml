@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:textStyle="bold"
+    android:orientation="vertical"
+    android:tag="layout/item_video_season_item_0"
+    android:paddingLeft="@dimen/dp_8"
+    android:paddingTop="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_8"
+    android:paddingBottom="@dimen/dp_10"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/dp_8"
+    android:paddingVertical="@dimen/dp_10"/>

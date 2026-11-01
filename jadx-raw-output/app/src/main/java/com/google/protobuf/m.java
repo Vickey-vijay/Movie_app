@@ -1,0 +1,234 @@
+package com.google.protobuf;
+
+import java.util.AbstractList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.RandomAccess;
+
+/* JADX INFO: compiled from: FloatArrayList.java */
+/* JADX INFO: loaded from: classes2.dex */
+public final class m extends a<Float> implements Internal.FloatList, RandomAccess, g0 {
+    private static final m EMPTY_LIST = new m(new float[0], 0, false);
+    private float[] array;
+    private int size;
+
+    public m() {
+        this(new float[10], 0, true);
+    }
+
+    @Override // com.google.protobuf.Internal.FloatList
+    public void addFloat(float f10) {
+        ensureIsMutable();
+        int i10 = this.size;
+        float[] fArr = this.array;
+        if (i10 == fArr.length) {
+            float[] fArr2 = new float[((i10 * 3) / 2) + 1];
+            System.arraycopy(fArr, 0, fArr2, 0, i10);
+            this.array = fArr2;
+        }
+        float[] fArr3 = this.array;
+        int i11 = this.size;
+        this.size = i11 + 1;
+        fArr3[i11] = f10;
+    }
+
+    @Override // com.google.protobuf.a, java.util.AbstractList, java.util.Collection, java.util.List
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof m)) {
+            return super.equals(obj);
+        }
+        m mVar = (m) obj;
+        if (this.size != mVar.size) {
+            return false;
+        }
+        float[] fArr = mVar.array;
+        for (int i10 = 0; i10 < this.size; i10++) {
+            if (Float.floatToIntBits(this.array[i10]) != Float.floatToIntBits(fArr[i10])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override // com.google.protobuf.a, java.util.AbstractList, java.util.Collection, java.util.List
+    public int hashCode() {
+        int iFloatToIntBits = 1;
+        for (int i10 = 0; i10 < this.size; i10++) {
+            iFloatToIntBits = (iFloatToIntBits * 31) + Float.floatToIntBits(this.array[i10]);
+        }
+        return iFloatToIntBits;
+    }
+
+    private m(float[] fArr, int i10, boolean z10) {
+        super(z10);
+        this.array = fArr;
+        this.size = i10;
+    }
+
+    public static m emptyList() {
+        return EMPTY_LIST;
+    }
+
+    private void ensureIndexInRange(int i10) {
+        if (i10 < 0 || i10 >= this.size) {
+            throw new IndexOutOfBoundsException(makeOutOfBoundsExceptionMessage(i10));
+        }
+    }
+
+    private String makeOutOfBoundsExceptionMessage(int i10) {
+        return "Index:" + i10 + ", Size:" + this.size;
+    }
+
+    @Override // java.util.AbstractList, java.util.List
+    public Float get(int i10) {
+        return Float.valueOf(getFloat(i10));
+    }
+
+    @Override // java.util.AbstractList, java.util.List
+    public int indexOf(Object obj) {
+        if (!(obj instanceof Float)) {
+            return -1;
+        }
+        float fFloatValue = ((Float) obj).floatValue();
+        int size = size();
+        for (int i10 = 0; i10 < size; i10++) {
+            if (this.array[i10] == fFloatValue) {
+                return i10;
+            }
+        }
+        return -1;
+    }
+
+    @Override // com.google.protobuf.Internal.ProtobufList
+    /* JADX INFO: renamed from: mutableCopyWithCapacity */
+    public Internal.ProtobufList<Float> mutableCopyWithCapacity2(int i10) {
+        if (i10 >= this.size) {
+            return new m(Arrays.copyOf(this.array, i10), this.size, true);
+        }
+        throw new IllegalArgumentException();
+    }
+
+    @Override // com.google.protobuf.a, java.util.AbstractList, java.util.List
+    public Float remove(int i10) {
+        ensureIsMutable();
+        ensureIndexInRange(i10);
+        float[] fArr = this.array;
+        float f10 = fArr[i10];
+        int i11 = this.size;
+        if (i10 < i11 - 1) {
+            System.arraycopy(fArr, i10 + 1, fArr, i10, (i11 - i10) - 1);
+        }
+        this.size--;
+        ((AbstractList) this).modCount++;
+        return Float.valueOf(f10);
+    }
+
+    @Override // com.google.protobuf.a, java.util.AbstractList, java.util.List
+    public Float set(int i10, Float f10) {
+        return Float.valueOf(setFloat(i10, f10.floatValue()));
+    }
+
+    @Override // java.util.AbstractCollection, java.util.Collection, java.util.List
+    public int size() {
+        return this.size;
+    }
+
+    @Override // com.google.protobuf.a, java.util.AbstractList, java.util.AbstractCollection, java.util.Collection, java.util.List
+    public boolean add(Float f10) {
+        addFloat(f10.floatValue());
+        return true;
+    }
+
+    @Override // com.google.protobuf.a, java.util.AbstractCollection, java.util.Collection, java.util.List
+    public boolean addAll(Collection<? extends Float> collection) {
+        ensureIsMutable();
+        Internal.checkNotNull(collection);
+        if (!(collection instanceof m)) {
+            return super.addAll(collection);
+        }
+        m mVar = (m) collection;
+        int i10 = mVar.size;
+        if (i10 == 0) {
+            return false;
+        }
+        int i11 = this.size;
+        if (Integer.MAX_VALUE - i11 >= i10) {
+            int i12 = i11 + i10;
+            float[] fArr = this.array;
+            if (i12 > fArr.length) {
+                this.array = Arrays.copyOf(fArr, i12);
+            }
+            System.arraycopy(mVar.array, 0, this.array, this.size, mVar.size);
+            this.size = i12;
+            ((AbstractList) this).modCount++;
+            return true;
+        }
+        throw new OutOfMemoryError();
+    }
+
+    @Override // java.util.AbstractCollection, java.util.Collection, java.util.List
+    public boolean contains(Object obj) {
+        if (indexOf(obj) != -1) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override // com.google.protobuf.Internal.FloatList
+    public float getFloat(int i10) {
+        ensureIndexInRange(i10);
+        return this.array[i10];
+    }
+
+    @Override // java.util.AbstractList
+    public void removeRange(int i10, int i11) {
+        ensureIsMutable();
+        if (i11 >= i10) {
+            float[] fArr = this.array;
+            System.arraycopy(fArr, i11, fArr, i10, this.size - i11);
+            this.size -= i11 - i10;
+            ((AbstractList) this).modCount++;
+            return;
+        }
+        throw new IndexOutOfBoundsException("toIndex < fromIndex");
+    }
+
+    @Override // com.google.protobuf.Internal.FloatList
+    public float setFloat(int i10, float f10) {
+        ensureIsMutable();
+        ensureIndexInRange(i10);
+        float[] fArr = this.array;
+        float f11 = fArr[i10];
+        fArr[i10] = f10;
+        return f11;
+    }
+
+    @Override // com.google.protobuf.a, java.util.AbstractList, java.util.List
+    public void add(int i10, Float f10) {
+        addFloat(i10, f10.floatValue());
+    }
+
+    private void addFloat(int i10, float f10) {
+        int i11;
+        ensureIsMutable();
+        if (i10 >= 0 && i10 <= (i11 = this.size)) {
+            float[] fArr = this.array;
+            if (i11 < fArr.length) {
+                System.arraycopy(fArr, i10, fArr, i10 + 1, i11 - i10);
+            } else {
+                float[] fArr2 = new float[((i11 * 3) / 2) + 1];
+                System.arraycopy(fArr, 0, fArr2, 0, i10);
+                System.arraycopy(this.array, i10, fArr2, i10 + 1, this.size - i10);
+                this.array = fArr2;
+            }
+            this.array[i10] = f10;
+            this.size++;
+            ((AbstractList) this).modCount++;
+            return;
+        }
+        throw new IndexOutOfBoundsException(makeOutOfBoundsExceptionMessage(i10));
+    }
+}

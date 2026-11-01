@@ -1,0 +1,24 @@
+package h;
+
+import gl.t1;
+
+/* JADX INFO: loaded from: classes10.dex */
+public final class h implements t1 {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final /* synthetic */ c f53654a;
+
+    public h(c cVar) {
+        this.f53654a = cVar;
+    }
+
+    @Override // gl.t1
+    public final void a() {
+        c cVar = this.f53654a;
+        if (cVar.I) {
+            return;
+        }
+        cVar.v("load ad time out!");
+        this.f53654a.J = true;
+    }
+}

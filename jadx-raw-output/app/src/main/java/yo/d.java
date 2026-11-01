@@ -1,0 +1,27 @@
+package yo;
+
+/* JADX INFO: compiled from: IVideoController.java */
+/* JADX INFO: loaded from: classes4.dex */
+public interface d {
+    int getCutoutHeight();
+
+    boolean hasCutout();
+
+    void hide();
+
+    boolean isLocked();
+
+    boolean isShowing();
+
+    void setLocked(boolean z10);
+
+    void show();
+
+    void startFadeOut();
+
+    void startProgress();
+
+    void stopFadeOut();
+
+    void stopProgress();
+}

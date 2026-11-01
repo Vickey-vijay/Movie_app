@@ -1,0 +1,46 @@
+package androidx.navigation;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import androidx.annotation.MainThread;
+import ck.p;
+import ck.s;
+import kotlin.Metadata;
+
+/* JADX INFO: compiled from: ActivityNavArgsLazy.kt */
+/* JADX INFO: loaded from: classes8.dex */
+@Metadata(d1 = {"\u0000\u0012\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\u001a\u001f\u0010\u0000\u001a\b\u0012\u0004\u0012\u0002H\u00020\u0001\"\n\b\u0000\u0010\u0002\u0018\u0001*\u00020\u0003*\u00020\u0004H\u0087\b¨\u0006\u0005"}, d2 = {"navArgs", "Landroidx/navigation/NavArgsLazy;", "Args", "Landroidx/navigation/NavArgs;", "Landroid/app/Activity;", "navigation-runtime_release"}, k = 2, mv = {1, 6, 0}, xi = 48)
+public final class ActivityNavArgsLazyKt {
+    @MainThread
+    public static final /* synthetic */ <Args extends NavArgs> NavArgsLazy<Args> navArgs(final Activity activity) {
+        p.j(activity, "<this>");
+        p.p(4, "Args");
+        return new NavArgsLazy<>(s.b(NavArgs.class), new bk.a<Bundle>() { // from class: androidx.navigation.ActivityNavArgsLazyKt.navArgs.1
+            /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+            {
+                super(0);
+            }
+
+            /* JADX WARN: Can't rename method to resolve collision */
+            @Override // bk.a
+            public final Bundle invoke() {
+                Bundle extras;
+                Intent intent = activity.getIntent();
+                if (intent != null) {
+                    Activity activity2 = activity;
+                    extras = intent.getExtras();
+                    if (extras == null) {
+                        throw new IllegalStateException("Activity " + activity2 + " has null extras in " + intent);
+                    }
+                } else {
+                    extras = null;
+                }
+                if (extras != null) {
+                    return extras;
+                }
+                throw new IllegalStateException("Activity " + activity + " has a null Intent");
+            }
+        });
+    }
+}

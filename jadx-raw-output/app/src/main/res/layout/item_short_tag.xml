@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ruffian.library.widget.RTextView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:textSize="@dimen/sp_10"
+    android:textColor="@color/color_commen"
+    android:id="@+id/tv_name"
+    android:paddingLeft="5dp"
+    android:paddingTop="2dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="2dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="5dp"
+    android:paddingVertical="2dp"
+    app:border_color_normal="@color/color_commen"
+    app:border_width_normal="@dimen/dp_1"
+    app:corner_radius="@dimen/dp_3"/>

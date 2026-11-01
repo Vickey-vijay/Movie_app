@@ -1,0 +1,35 @@
+package com.google.android.gms.internal.ads;
+
+import android.text.TextUtils;
+import androidx.annotation.Nullable;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads@@24.9.0 */
+/* JADX INFO: loaded from: classes11.dex */
+final class zzux {
+    public final String zza;
+    public final boolean zzb;
+    public final boolean zzc;
+
+    public zzux(String str, boolean z10, boolean z11) {
+        this.zza = str;
+        this.zzb = z10;
+        this.zzc = z11;
+    }
+
+    public final boolean equals(@Nullable Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj != null && obj.getClass() == zzux.class) {
+            zzux zzuxVar = (zzux) obj;
+            if (TextUtils.equals(this.zza, zzuxVar.zza) && this.zzb == zzuxVar.zzb && this.zzc == zzuxVar.zzc) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public final int hashCode() {
+        return ((((this.zza.hashCode() + 31) * 31) + (true != this.zzb ? 1237 : 1231)) * 31) + (true == this.zzc ? 1231 : 1237);
+    }
+}

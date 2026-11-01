@@ -1,0 +1,277 @@
+package io.bidmachine.media3.extractor.metadata.scte35;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import androidx.annotation.Nullable;
+import io.bidmachine.media3.common.Format;
+import io.bidmachine.media3.common.MediaMetadata;
+import io.bidmachine.media3.common.util.ParsableByteArray;
+import io.bidmachine.media3.common.util.UnstableApi;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/* JADX INFO: loaded from: classes5.dex */
+@UnstableApi
+public final class SpliceScheduleCommand extends SpliceCommand {
+    public static final Parcelable.Creator<SpliceScheduleCommand> CREATOR = new a();
+    public final List<Event> events;
+
+    public static final class ComponentSplice {
+        public final int componentTag;
+        public final long utcSpliceTime;
+
+        public /* synthetic */ ComponentSplice(int i10, long j10, a aVar) {
+            this(i10, j10);
+        }
+
+        private ComponentSplice(int i10, long j10) {
+            this.componentTag = i10;
+            this.utcSpliceTime = j10;
+        }
+
+        /* JADX INFO: Access modifiers changed from: private */
+        public static ComponentSplice createFromParcel(Parcel parcel) {
+            return new ComponentSplice(parcel.readInt(), parcel.readLong());
+        }
+
+        /* JADX INFO: Access modifiers changed from: private */
+        public void writeToParcel(Parcel parcel) {
+            parcel.writeInt(this.componentTag);
+            parcel.writeLong(this.utcSpliceTime);
+        }
+    }
+
+    public static final class Event {
+        public final boolean autoReturn;
+        public final int availNum;
+        public final int availsExpected;
+        public final long breakDurationUs;
+        public final List<ComponentSplice> componentSpliceList;
+        public final boolean outOfNetworkIndicator;
+        public final boolean programSpliceFlag;
+        public final boolean spliceEventCancelIndicator;
+        public final long spliceEventId;
+        public final int uniqueProgramId;
+        public final long utcSpliceTime;
+
+        private Event(long j10, boolean z10, boolean z11, boolean z12, List<ComponentSplice> list, long j11, boolean z13, long j12, int i10, int i11, int i12) {
+            this.spliceEventId = j10;
+            this.spliceEventCancelIndicator = z10;
+            this.outOfNetworkIndicator = z11;
+            this.programSpliceFlag = z12;
+            this.componentSpliceList = Collections.unmodifiableList(list);
+            this.utcSpliceTime = j11;
+            this.autoReturn = z13;
+            this.breakDurationUs = j12;
+            this.uniqueProgramId = i10;
+            this.availNum = i11;
+            this.availsExpected = i12;
+        }
+
+        /* JADX INFO: Access modifiers changed from: private */
+        public static Event createFromParcel(Parcel parcel) {
+            return new Event(parcel);
+        }
+
+        /* JADX INFO: Access modifiers changed from: private */
+        public void writeToParcel(Parcel parcel) {
+            parcel.writeLong(this.spliceEventId);
+            parcel.writeByte(this.spliceEventCancelIndicator ? (byte) 1 : (byte) 0);
+            parcel.writeByte(this.outOfNetworkIndicator ? (byte) 1 : (byte) 0);
+            parcel.writeByte(this.programSpliceFlag ? (byte) 1 : (byte) 0);
+            int size = this.componentSpliceList.size();
+            parcel.writeInt(size);
+            for (int i10 = 0; i10 < size; i10++) {
+                this.componentSpliceList.get(i10).writeToParcel(parcel);
+            }
+            parcel.writeLong(this.utcSpliceTime);
+            parcel.writeByte(this.autoReturn ? (byte) 1 : (byte) 0);
+            parcel.writeLong(this.breakDurationUs);
+            parcel.writeInt(this.uniqueProgramId);
+            parcel.writeInt(this.availNum);
+            parcel.writeInt(this.availsExpected);
+        }
+
+        /* JADX INFO: Access modifiers changed from: private */
+        public static Event parseFromSection(ParsableByteArray parsableByteArray) {
+            boolean z10;
+            ArrayList arrayList;
+            boolean z11;
+            long j10;
+            boolean z12;
+            long j11;
+            int i10;
+            int i11;
+            int unsignedByte;
+            boolean z13;
+            boolean z14;
+            boolean z15;
+            boolean z16;
+            long unsignedInt;
+            boolean z17;
+            long unsignedInt2;
+            boolean z18;
+            long unsignedInt3 = parsableByteArray.readUnsignedInt();
+            if ((parsableByteArray.readUnsignedByte() & 128) != 0) {
+                z10 = true;
+            } else {
+                z10 = false;
+            }
+            ArrayList arrayList2 = new ArrayList();
+            if (!z10) {
+                int unsignedByte2 = parsableByteArray.readUnsignedByte();
+                if ((unsignedByte2 & 128) != 0) {
+                    z14 = true;
+                } else {
+                    z14 = false;
+                }
+                if ((unsignedByte2 & 64) != 0) {
+                    z15 = true;
+                } else {
+                    z15 = false;
+                }
+                if ((unsignedByte2 & 32) != 0) {
+                    z16 = true;
+                } else {
+                    z16 = false;
+                }
+                if (z15) {
+                    unsignedInt = parsableByteArray.readUnsignedInt();
+                } else {
+                    unsignedInt = -9223372036854775807L;
+                }
+                if (!z15) {
+                    int unsignedByte3 = parsableByteArray.readUnsignedByte();
+                    ArrayList arrayList3 = new ArrayList(unsignedByte3);
+                    for (int i12 = 0; i12 < unsignedByte3; i12++) {
+                        arrayList3.add(new ComponentSplice(parsableByteArray.readUnsignedByte(), parsableByteArray.readUnsignedInt(), null));
+                    }
+                    arrayList2 = arrayList3;
+                }
+                if (z16) {
+                    long unsignedByte4 = parsableByteArray.readUnsignedByte();
+                    if ((128 & unsignedByte4) != 0) {
+                        z18 = true;
+                    } else {
+                        z18 = false;
+                    }
+                    unsignedInt2 = ((((unsignedByte4 & 1) << 32) | parsableByteArray.readUnsignedInt()) * 1000) / 90;
+                    z17 = z18;
+                } else {
+                    z17 = false;
+                    unsignedInt2 = -9223372036854775807L;
+                }
+                int unsignedShort = parsableByteArray.readUnsignedShort();
+                int unsignedByte5 = parsableByteArray.readUnsignedByte();
+                z13 = z15;
+                unsignedByte = parsableByteArray.readUnsignedByte();
+                j11 = unsignedInt2;
+                arrayList = arrayList2;
+                long j12 = unsignedInt;
+                i10 = unsignedShort;
+                i11 = unsignedByte5;
+                j10 = j12;
+                boolean z19 = z14;
+                z12 = z17;
+                z11 = z19;
+            } else {
+                arrayList = arrayList2;
+                z11 = false;
+                j10 = -9223372036854775807L;
+                z12 = false;
+                j11 = -9223372036854775807L;
+                i10 = 0;
+                i11 = 0;
+                unsignedByte = 0;
+                z13 = false;
+            }
+            return new Event(unsignedInt3, z10, z11, z13, arrayList, j10, z12, j11, i10, i11, unsignedByte);
+        }
+
+        private Event(Parcel parcel) {
+            this.spliceEventId = parcel.readLong();
+            this.spliceEventCancelIndicator = parcel.readByte() == 1;
+            this.outOfNetworkIndicator = parcel.readByte() == 1;
+            this.programSpliceFlag = parcel.readByte() == 1;
+            int i10 = parcel.readInt();
+            ArrayList arrayList = new ArrayList(i10);
+            for (int i11 = 0; i11 < i10; i11++) {
+                arrayList.add(ComponentSplice.createFromParcel(parcel));
+            }
+            this.componentSpliceList = Collections.unmodifiableList(arrayList);
+            this.utcSpliceTime = parcel.readLong();
+            this.autoReturn = parcel.readByte() == 1;
+            this.breakDurationUs = parcel.readLong();
+            this.uniqueProgramId = parcel.readInt();
+            this.availNum = parcel.readInt();
+            this.availsExpected = parcel.readInt();
+        }
+    }
+
+    public class a implements Parcelable.Creator<SpliceScheduleCommand> {
+        /* JADX WARN: Can't rename method to resolve collision */
+        @Override // android.os.Parcelable.Creator
+        public SpliceScheduleCommand createFromParcel(Parcel parcel) {
+            return new SpliceScheduleCommand(parcel, null);
+        }
+
+        /* JADX WARN: Can't rename method to resolve collision */
+        @Override // android.os.Parcelable.Creator
+        public SpliceScheduleCommand[] newArray(int i10) {
+            return new SpliceScheduleCommand[i10];
+        }
+    }
+
+    public /* synthetic */ SpliceScheduleCommand(Parcel parcel, a aVar) {
+        this(parcel);
+    }
+
+    @Override // io.bidmachine.media3.extractor.metadata.scte35.SpliceCommand, io.bidmachine.media3.common.Metadata.Entry
+    @Nullable
+    public /* bridge */ /* synthetic */ byte[] getWrappedMetadataBytes() {
+        return super.getWrappedMetadataBytes();
+    }
+
+    @Override // io.bidmachine.media3.extractor.metadata.scte35.SpliceCommand, io.bidmachine.media3.common.Metadata.Entry
+    @Nullable
+    public /* bridge */ /* synthetic */ Format getWrappedMetadataFormat() {
+        return super.getWrappedMetadataFormat();
+    }
+
+    @Override // io.bidmachine.media3.extractor.metadata.scte35.SpliceCommand, io.bidmachine.media3.common.Metadata.Entry
+    public /* bridge */ /* synthetic */ void populateMediaMetadata(MediaMetadata.Builder builder) {
+        super.populateMediaMetadata(builder);
+    }
+
+    private SpliceScheduleCommand(List<Event> list) {
+        this.events = Collections.unmodifiableList(list);
+    }
+
+    @Override // android.os.Parcelable
+    public void writeToParcel(Parcel parcel, int i10) {
+        int size = this.events.size();
+        parcel.writeInt(size);
+        for (int i11 = 0; i11 < size; i11++) {
+            this.events.get(i11).writeToParcel(parcel);
+        }
+    }
+
+    public static SpliceScheduleCommand parseFromSection(ParsableByteArray parsableByteArray) {
+        int unsignedByte = parsableByteArray.readUnsignedByte();
+        ArrayList arrayList = new ArrayList(unsignedByte);
+        for (int i10 = 0; i10 < unsignedByte; i10++) {
+            arrayList.add(Event.parseFromSection(parsableByteArray));
+        }
+        return new SpliceScheduleCommand(arrayList);
+    }
+
+    private SpliceScheduleCommand(Parcel parcel) {
+        int i10 = parcel.readInt();
+        ArrayList arrayList = new ArrayList(i10);
+        for (int i11 = 0; i11 < i10; i11++) {
+            arrayList.add(Event.createFromParcel(parcel));
+        }
+        this.events = Collections.unmodifiableList(arrayList);
+    }
+}

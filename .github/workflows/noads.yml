@@ -1,0 +1,80 @@
+name: noads-apk
+
+# Builds the ad-free Flickverse APK from apk-original/ with the in-place patches in noads/,
+# smoke-tests the ORIGINAL (control) and the PATCHED apk on an Android emulator, and (only when
+# you run it by hand with publish=true) publishes a GitHub pre-release.
+on:
+  push:
+    branches: [recovered-source]
+    paths: ['noads/**', '.github/workflows/noads.yml']
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish a GitHub pre-release with the APK'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - name: Put Android build-tools (apksigner) on PATH
+        run: echo "$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)" >> "$GITHUB_PATH"
+      - name: Build, sign, check
+        run: bash noads/build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flickverse-noads-apk
+          path: build/Flickverse-V4.0.0-noads.apk
+          if-no-files-found: error
+
+  smoke:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { name: flickverse-noads-apk, path: build }
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          script: bash noads/ci/smoke-all.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-output
+          path: smoke-out/
+          if-no-files-found: ignore
+
+  release:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish
+    needs: [build, smoke]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { name: flickverse-noads-apk, path: build }
+      - name: Publish pre-release
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          sha=$(sha256sum build/Flickverse-V4.0.0-noads.apk | cut -d' ' -f1)
+          gh release create "v4.0.0-noads-${GITHUB_RUN_NUMBER}" build/Flickverse-V4.0.0-noads.apk \
+            --repo "$GITHUB_REPOSITORY" --prerelease \
+            --title "Flickverse V4.0.0 (no ads) build ${GITHUB_RUN_NUMBER}" \
+            --notes "Original V4.0.0 APK with the ad SDKs switched off (see noads/README.md). Personal-use build. Signed with the throw-away key in noads/signing/. Different signature from the original app: uninstall the original first. SHA-256: ${sha}"

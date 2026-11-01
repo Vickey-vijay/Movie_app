@@ -1,0 +1,91 @@
+package com.mgs.carparking.databinding;
+
+import android.util.SparseIntArray;
+import android.view.View;
+import android.widget.LinearLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingComponent;
+import androidx.databinding.ViewDataBinding;
+import com.fvvcl.flickverse.R;
+import com.mgs.carparking.widgets.cardbanner.view.RoundedImageView;
+import w9.w1;
+
+/* JADX INFO: loaded from: classes.dex */
+public class ItemHomeContentSearchRecommendListBindingImpl extends ItemHomeContentSearchRecommendListBinding {
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    @Nullable
+    public static final ViewDataBinding.IncludedLayouts f40586f = null;
+
+    /* JADX INFO: renamed from: g, reason: collision with root package name */
+    @Nullable
+    public static final SparseIntArray f40587g;
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    @NonNull
+    public final LinearLayout f40588d;
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public long f40589e;
+
+    public ItemHomeContentSearchRecommendListBindingImpl(@Nullable DataBindingComponent dataBindingComponent, @NonNull View view) {
+        this(dataBindingComponent, view, ViewDataBinding.mapBindings(dataBindingComponent, view, 2, f40586f, f40587g));
+    }
+
+    @Override // androidx.databinding.ViewDataBinding
+    public void executeBindings() {
+        synchronized (this) {
+            this.f40589e = 0L;
+        }
+    }
+
+    @Override // androidx.databinding.ViewDataBinding
+    public boolean hasPendingBindings() {
+        synchronized (this) {
+            return this.f40589e != 0;
+        }
+    }
+
+    @Override // androidx.databinding.ViewDataBinding
+    public void invalidateAll() {
+        synchronized (this) {
+            this.f40589e = 2L;
+        }
+        requestRebind();
+    }
+
+    @Override // androidx.databinding.ViewDataBinding
+    public boolean onFieldChange(int i10, Object obj, int i11) {
+        return false;
+    }
+
+    @Override // androidx.databinding.ViewDataBinding
+    public boolean setVariable(int i10, @Nullable Object obj) {
+        if (7 != i10) {
+            return false;
+        }
+        a((w1) obj);
+        return true;
+    }
+
+    static {
+        SparseIntArray sparseIntArray = new SparseIntArray();
+        f40587g = sparseIntArray;
+        sparseIntArray.put(R.id.item_img, 1);
+    }
+
+    public ItemHomeContentSearchRecommendListBindingImpl(DataBindingComponent dataBindingComponent, View view, Object[] objArr) {
+        super(dataBindingComponent, view, 0, (RoundedImageView) objArr[1]);
+        this.f40589e = -1L;
+        LinearLayout linearLayout = (LinearLayout) objArr[0];
+        this.f40588d = linearLayout;
+        linearLayout.setTag(null);
+        setRootTag(view);
+        invalidateAll();
+    }
+
+    public void a(@Nullable w1 w1Var) {
+        this.f40585c = w1Var;
+    }
+}

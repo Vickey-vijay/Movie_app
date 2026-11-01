@@ -1,0 +1,58 @@
+package g5;
+
+import android.text.TextUtils;
+import androidx.annotation.Nullable;
+
+/* JADX INFO: compiled from: Assertions.java */
+/* JADX INFO: loaded from: classes5.dex */
+public final class a {
+    public static void a(boolean z10) {
+        if (!z10) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public static void b(boolean z10, Object obj) {
+        if (!z10) {
+            throw new IllegalArgumentException(String.valueOf(obj));
+        }
+    }
+
+    public static int c(int i10, int i11, int i12) {
+        if (i10 < i11 || i10 >= i12) {
+            throw new IndexOutOfBoundsException();
+        }
+        return i10;
+    }
+
+    public static void f(boolean z10) {
+        if (!z10) {
+            throw new IllegalStateException();
+        }
+    }
+
+    public static void g(boolean z10, Object obj) {
+        if (!z10) {
+            throw new IllegalStateException(String.valueOf(obj));
+        }
+    }
+
+    public static <T> T h(@Nullable T t10) {
+        if (t10 != null) {
+            return t10;
+        }
+        throw new IllegalStateException();
+    }
+
+    public static String d(@Nullable String str) {
+        if (!TextUtils.isEmpty(str)) {
+            return str;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    public static <T> T e(@Nullable T t10) {
+        t10.getClass();
+        return t10;
+    }
+}

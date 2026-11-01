@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bigo_ad_lose_reward">আপনার পুরস্কার হারাবেন।</string>
+    <string name="bigo_ad_resume">আবার চালান</string>
+    <string name="bigo_ad_skip">এড়িয়ে যান</string>
+    <string name="bigo_ad_skip_video">ভিডিও বাদ দিবেন?</string>
+    <string name="main_ad">বিজ্ঞাপন</string>
+    <string name="main_app_exist">বিজ্ঞাপন অ্যাপ ইনস্টল করা হয়েছে</string>
+    <string name="main_downLoad">ডাউনলোড</string>
+    <string name="main_downLoad_fail">ডাউনলোড ব্যর্থ হয়েছে</string>
+    <string name="main_downLoad_now">অবিলম্বে ডাউনলোড করুন</string>
+    <string name="main_forward_detail">ডাউনলোড করতে ক্লিক করুন বা বিস্তারিত জানাতে যান</string>
+    <string name="main_has_start_downLoad">ইতিমধ্যে ডাউনলোড হচ্ছে</string>
+    <string name="main_install">ইনস্টল করুন</string>
+    <string name="main_install_now">এখন ইন্সটল করুন</string>
+    <string name="main_load_data_fail">ডেটা লোড করতে ব্যর্থ হয়েছে৷</string>
+    <string name="main_load_fail">লোড করতে ব্যর্থ</string>
+    <string name="main_open">খোলা</string>
+    <string name="main_open_now">এখন খুলুন</string>
+    <string name="main_skip">উপর লাফ</string>
+    <string name="main_start_downLoad">ডাউনলোড শুরু</string>
+    <string name="main_stop_downLoad">ডাউনলোড বন্ধ করুন</string>
+    <string name="main_storage_forbid">স্টোরেজ অনুমতি নিষিদ্ধ, আপনি শুধুমাত্র অনুমোদন পরে ডাউনলোড করতে পারেন</string>
+</resources>

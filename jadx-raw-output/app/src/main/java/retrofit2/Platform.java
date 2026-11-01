@@ -1,0 +1,88 @@
+package retrofit2;
+
+import android.os.Handler;
+import android.os.Looper;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.concurrent.Executor;
+import org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement;
+
+/* JADX INFO: loaded from: classes8.dex */
+class Platform {
+    private static final Platform PLATFORM = findPlatform();
+
+    public static class Android extends Platform {
+
+        public static class MainThreadExecutor implements Executor {
+            private final Handler handler = new Handler(Looper.getMainLooper());
+
+            @Override // java.util.concurrent.Executor
+            public void execute(Runnable runnable) {
+                this.handler.post(runnable);
+            }
+        }
+
+        @Override // retrofit2.Platform
+        public CallAdapter.Factory defaultCallAdapterFactory(Executor executor) {
+            if (executor != null) {
+                return new ExecutorCallAdapterFactory(executor);
+            }
+            throw new AssertionError();
+        }
+
+        @Override // retrofit2.Platform
+        public Executor defaultCallbackExecutor() {
+            return new MainThreadExecutor();
+        }
+    }
+
+    @IgnoreJRERequirement
+    public static class Java8 extends Platform {
+        @Override // retrofit2.Platform
+        public Object invokeDefaultMethod(Method method, Class<?> cls, Object obj, Object... objArr) throws Throwable {
+            Constructor declaredConstructor = MethodHandles.Lookup.class.getDeclaredConstructor(Class.class, Integer.TYPE);
+            declaredConstructor.setAccessible(true);
+            return ((MethodHandles.Lookup) declaredConstructor.newInstance(cls, -1)).unreflectSpecial(method, cls).bindTo(obj).invokeWithArguments(objArr);
+        }
+
+        @Override // retrofit2.Platform
+        public boolean isDefaultMethod(Method method) {
+            return method.isDefault();
+        }
+    }
+
+    public Executor defaultCallbackExecutor() {
+        return null;
+    }
+
+    public boolean isDefaultMethod(Method method) {
+        return false;
+    }
+
+    private static Platform findPlatform() {
+        try {
+            try {
+                Class.forName("android.os.Build");
+                return new Android();
+            } catch (ClassNotFoundException unused) {
+                return new Platform();
+            }
+        } catch (ClassNotFoundException unused2) {
+            Class.forName("java.util.Optional");
+            return new Java8();
+        }
+    }
+
+    public static Platform get() {
+        return PLATFORM;
+    }
+
+    public CallAdapter.Factory defaultCallAdapterFactory(Executor executor) {
+        return executor != null ? new ExecutorCallAdapterFactory(executor) : DefaultCallAdapterFactory.INSTANCE;
+    }
+
+    public Object invokeDefaultMethod(Method method, Class<?> cls, Object obj, Object... objArr) throws Throwable {
+        throw new UnsupportedOperationException();
+    }
+}

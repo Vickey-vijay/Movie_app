@@ -1,0 +1,79 @@
+package com.yandex.mobile.ads;
+
+/* JADX INFO: loaded from: classes2.dex */
+public final class R$color {
+    public static final int androidx_core_ripple_material_light = 2131099675;
+    public static final int androidx_core_secondary_text_default_material_light = 2131099676;
+    public static final int call_notification_answer_color = 2131099726;
+    public static final int call_notification_decline_color = 2131099727;
+    public static final int common_google_signin_btn_text_dark = 2131099833;
+    public static final int common_google_signin_btn_text_dark_default = 2131099834;
+    public static final int common_google_signin_btn_text_dark_disabled = 2131099835;
+    public static final int common_google_signin_btn_text_dark_focused = 2131099836;
+    public static final int common_google_signin_btn_text_dark_pressed = 2131099837;
+    public static final int common_google_signin_btn_text_light = 2131099838;
+    public static final int common_google_signin_btn_text_light_default = 2131099839;
+    public static final int common_google_signin_btn_text_light_disabled = 2131099840;
+    public static final int common_google_signin_btn_text_light_focused = 2131099841;
+    public static final int common_google_signin_btn_text_light_pressed = 2131099842;
+    public static final int common_google_signin_btn_tint = 2131099843;
+    public static final int debug_panel_black = 2131099845;
+    public static final int debug_panel_dark_gray = 2131099846;
+    public static final int debug_panel_gray = 2131099847;
+    public static final int debug_panel_green = 2131099848;
+    public static final int debug_panel_light_gray = 2131099849;
+    public static final int debug_panel_orange = 2131099850;
+    public static final int debug_panel_red = 2131099851;
+    public static final int debug_panel_white = 2131099852;
+    public static final int div_accent_color = 2131099896;
+    public static final int div_button_color = 2131099897;
+    public static final int div_indicator_default_color = 2131099898;
+    public static final int div_indicator_selected_color = 2131099899;
+    public static final int div_separator_color = 2131099900;
+    public static final int div_tab_indicator = 2131099901;
+    public static final int div_text_dark_disabled_40 = 2131099902;
+    public static final int div_text_dark_disabled_50 = 2131099903;
+    public static final int div_text_dark_disabled_80 = 2131099904;
+    public static final int div_title_menu_color = 2131099905;
+    public static final int div_traffic_item_stroke_color = 2131099906;
+    public static final int monetization_ads_internal_age_text_color = 2131100067;
+    public static final int monetization_ads_internal_app_install_call_to_action_green = 2131100068;
+    public static final int monetization_ads_internal_app_install_media_view_foreground = 2131100069;
+    public static final int monetization_ads_internal_app_install_timer_text_color_dark = 2131100070;
+    public static final int monetization_ads_internal_app_install_timer_text_color_light = 2131100071;
+    public static final int monetization_ads_internal_call_to_action_background_color = 2131100072;
+    public static final int monetization_ads_internal_call_to_action_background_color_blue = 2131100073;
+    public static final int monetization_ads_internal_call_to_action_background_color_yellow = 2131100074;
+    public static final int monetization_ads_internal_call_to_action_blue = 2131100075;
+    public static final int monetization_ads_internal_call_to_action_ripple_highlight_dark_color = 2131100076;
+    public static final int monetization_ads_internal_call_to_action_ripple_highlight_light_color = 2131100077;
+    public static final int monetization_ads_internal_call_to_action_text_color = 2131100078;
+    public static final int monetization_ads_internal_call_to_action_text_color_black = 2131100079;
+    public static final int monetization_ads_internal_domain_grey_text_color = 2131100080;
+    public static final int monetization_ads_internal_grey_text_color = 2131100081;
+    public static final int monetization_ads_internal_header_background_end = 2131100082;
+    public static final int monetization_ads_internal_header_background_start = 2131100083;
+    public static final int monetization_ads_internal_instream_advertiser_block_color_focused = 2131100084;
+    public static final int monetization_ads_internal_instream_advertiser_block_color_unfocused = 2131100085;
+    public static final int monetization_ads_internal_instream_background = 2131100086;
+    public static final int monetization_ads_internal_instream_background_color = 2131100087;
+    public static final int monetization_ads_internal_instream_call_to_action_block_color = 2131100088;
+    public static final int monetization_ads_internal_instream_progress_bar_color = 2131100089;
+    public static final int monetization_ads_internal_instream_skip_background_color = 2131100090;
+    public static final int monetization_ads_internal_instream_skip_text_color = 2131100091;
+    public static final int monetization_ads_internal_instream_sponsored_text_color = 2131100092;
+    public static final int monetization_ads_internal_price_text_color = 2131100093;
+    public static final int monetization_ads_internal_review_count_text_color = 2131100094;
+    public static final int monetization_ads_internal_reward_controls_background_gray = 2131100095;
+    public static final int monetization_ads_internal_rewarded_close_verification_text_color = 2131100096;
+    public static final int monetization_ads_internal_sponsored_text_color = 2131100097;
+    public static final int monetization_ads_internal_text_color_white = 2131100098;
+    public static final int monetization_ads_internal_warning_text_color = 2131100099;
+    public static final int notification_action_color_filter = 2131100151;
+    public static final int notification_icon_bg_color = 2131100152;
+    public static final int ripple_material_light = 2131100218;
+    public static final int secondary_text_default_material_light = 2131100221;
+
+    private R$color() {
+    }
+}

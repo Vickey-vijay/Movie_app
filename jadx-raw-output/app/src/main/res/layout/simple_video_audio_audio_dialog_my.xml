@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:id="@+id/exo_video_audio_brightness_layout"
+        android:background="@drawable/simple_video_dialog_progress_bg"
+        android:paddingLeft="@dimen/dp_6"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/exo_video_audio_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_video_volume"
+            android:contentDescription="@null"/>
+        <ProgressBar
+            android:id="@+id/exo_video_audio_pro_my"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginLeft="@dimen/dp_2"
+            android:layout_marginRight="@dimen/dp_6"
+            android:max="100"
+            android:progressDrawable="@drawable/simple_video_dialog_progress_my"
+            style="@android:style/Widget.ProgressBar.Horizontal"/>
+    </LinearLayout>
+</RelativeLayout>

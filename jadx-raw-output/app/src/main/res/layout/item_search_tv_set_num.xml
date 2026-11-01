@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:textSize="@dimen/sp_15"
+    android:textColor="@color/black"
+    android:gravity="center"
+    android:tag="layout/item_search_tv_set_num_0"
+    android:background="@drawable/bg_home_search_tv_set_num"
+    android:layout_width="@dimen/dp_50"
+    android:layout_height="@dimen/dp_50"
+    android:layout_margin="@dimen/dp_5"/>

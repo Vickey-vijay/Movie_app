@@ -1,0 +1,20 @@
+package com.fyber.inneractive.sdk.external;
+
+/* JADX INFO: loaded from: classes2.dex */
+public abstract class NativeAdEventsListener implements InneractiveAdViewEventsListener {
+    @Override // com.fyber.inneractive.sdk.external.InneractiveAdViewEventsListener
+    public final void onAdCollapsed(InneractiveAdSpot inneractiveAdSpot) {
+    }
+
+    @Override // com.fyber.inneractive.sdk.external.InneractiveAdViewEventsListener, com.fyber.inneractive.sdk.external.InneractiveUnitController.EventsListener
+    public final void onAdEnteredErrorState(InneractiveAdSpot inneractiveAdSpot, InneractiveUnitController.AdDisplayError adDisplayError) {
+    }
+
+    @Override // com.fyber.inneractive.sdk.external.InneractiveAdViewEventsListener
+    public final void onAdExpanded(InneractiveAdSpot inneractiveAdSpot) {
+    }
+
+    @Override // com.fyber.inneractive.sdk.external.InneractiveAdViewEventsListener
+    public final void onAdResized(InneractiveAdSpot inneractiveAdSpot) {
+    }
+}

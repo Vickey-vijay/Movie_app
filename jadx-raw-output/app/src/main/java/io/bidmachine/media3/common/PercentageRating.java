@@ -1,0 +1,57 @@
+package io.bidmachine.media3.common;
+
+import android.os.Bundle;
+import androidx.annotation.FloatRange;
+import androidx.annotation.Nullable;
+import io.bidmachine.media3.common.util.Assertions;
+import io.bidmachine.media3.common.util.UnstableApi;
+import io.bidmachine.media3.common.util.Util;
+
+/* JADX INFO: loaded from: classes2.dex */
+public final class PercentageRating extends Rating {
+    private static final String FIELD_PERCENT = Util.intToStringMaxRadix(1);
+    private static final int TYPE = 1;
+    private final float percent;
+
+    public PercentageRating() {
+        this.percent = -1.0f;
+    }
+
+    public int hashCode() {
+        return m5.i.b(Float.valueOf(this.percent));
+    }
+
+    @UnstableApi
+    public static PercentageRating fromBundle(Bundle bundle) {
+        Assertions.checkArgument(bundle.getInt(Rating.FIELD_RATING_TYPE, -1) == 1);
+        float f10 = bundle.getFloat(FIELD_PERCENT, -1.0f);
+        return f10 == -1.0f ? new PercentageRating() : new PercentageRating(f10);
+    }
+
+    public boolean equals(@Nullable Object obj) {
+        return (obj instanceof PercentageRating) && this.percent == ((PercentageRating) obj).percent;
+    }
+
+    public float getPercent() {
+        return this.percent;
+    }
+
+    @Override // io.bidmachine.media3.common.Rating
+    public boolean isRated() {
+        return this.percent != -1.0f;
+    }
+
+    @Override // io.bidmachine.media3.common.Rating
+    @UnstableApi
+    public Bundle toBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Rating.FIELD_RATING_TYPE, 1);
+        bundle.putFloat(FIELD_PERCENT, this.percent);
+        return bundle;
+    }
+
+    public PercentageRating(@FloatRange(from = 0.0d, to = 100.0d) float f10) {
+        Assertions.checkArgument(f10 >= 0.0f && f10 <= 100.0f, "percent must be in the range of [0, 100]");
+        this.percent = f10;
+    }
+}

@@ -1,0 +1,32 @@
+package com.fyber.inneractive.sdk.dv;
+
+import com.fyber.inneractive.sdk.config.IAConfigManager;
+import com.fyber.inneractive.sdk.config.enums.UnitDisplayType;
+import com.fyber.inneractive.sdk.external.InneractiveAdRequest;
+import com.fyber.inneractive.sdk.external.InneractiveAdSpot;
+
+/* JADX INFO: loaded from: classes4.dex */
+public final class e implements com.fyber.inneractive.sdk.factories.g {
+    @Override // com.fyber.inneractive.sdk.factories.g
+    public final boolean a(InneractiveAdSpot inneractiveAdSpot) {
+        return IAConfigManager.O.G != null && (inneractiveAdSpot.getAdContent() instanceof a);
+    }
+
+    @Override // com.fyber.inneractive.sdk.factories.g
+    public final com.fyber.inneractive.sdk.interfaces.f b(InneractiveAdSpot inneractiveAdSpot) {
+        boolean z10;
+        InneractiveAdRequest inneractiveAdRequest = inneractiveAdSpot.getAdContent().f15746a;
+        if (inneractiveAdRequest != null && !inneractiveAdRequest.getAllowFullscreen()) {
+            z10 = false;
+        } else {
+            z10 = true;
+        }
+        if (inneractiveAdSpot.getAdContent().c() && z10) {
+            if (inneractiveAdSpot.getAdContent().b().f18447p == UnitDisplayType.INTERSTITIAL) {
+                return new com.fyber.inneractive.sdk.dv.interstitial.h();
+            }
+            return new com.fyber.inneractive.sdk.dv.rewarded.h();
+        }
+        return null;
+    }
+}

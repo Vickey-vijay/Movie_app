@@ -1,0 +1,11 @@
+package com.google.android.gms.internal.ads;
+
+import java.io.IOException;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads@@24.9.0 */
+/* JADX INFO: loaded from: classes8.dex */
+public final class zzhp extends zzhq {
+    public zzhp(IOException iOException, zzhf zzhfVar) {
+        super("Cleartext HTTP traffic not permitted. See https://developer.android.com/guide/topics/media/issues/cleartext-not-permitted", iOException, zzhfVar, 2007, 1);
+    }
+}
