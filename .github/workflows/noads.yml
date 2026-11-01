@@ -7,6 +7,7 @@ on:
   push:
     branches: [recovered-source]
     paths: ['noads/**', '.github/workflows/noads.yml']
+    tags: ['noads-*']          # pushing a tag like noads-1 builds AND publishes a pre-release
   workflow_dispatch:
     inputs:
       publish:
@@ -73,7 +74,9 @@ jobs:
           if-no-files-found: ignore
 
   release:
-    if: github.event_name == 'workflow_dispatch' && inputs.publish
+    # Needs only a successful BUILD. The emulator result is reported in the notes but does not block,
+    # because this app is ARM-only and not every emulator image can run it.
+    if: ${{ always() && needs.build.result == 'success' && ((github.event_name == 'workflow_dispatch' && inputs.publish) || startsWith(github.ref, 'refs/tags/noads-')) }}
     needs: [build, smoke]
     runs-on: ubuntu-latest
     permissions:
@@ -82,10 +85,24 @@ jobs:
       - uses: actions/download-artifact@v4
         with: { name: flickverse-noads-apk, path: build }
       - name: Publish pre-release
-        env: { GH_TOKEN: '${{ github.token }}' }
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SMOKE: ${{ needs.smoke.result }}
         run: |
+          case "$GITHUB_REF" in refs/tags/*) tag="$GITHUB_REF_NAME" ;; *) tag="v4.0.0-noads-${GITHUB_RUN_NUMBER}" ;; esac
           sha=$(sha256sum build/Flickverse-V4.0.0-noads.apk | cut -d' ' -f1)
-          gh release create "v4.0.0-noads-${GITHUB_RUN_NUMBER}" build/Flickverse-V4.0.0-noads.apk \
-            --repo "$GITHUB_REPOSITORY" --prerelease \
-            --title "Flickverse V4.0.0 (no ads) build ${GITHUB_RUN_NUMBER}" \
-            --notes "Original V4.0.0 APK with the ad SDKs switched off (see noads/README.md). Personal-use build. Signed with the throw-away key in noads/signing/. Different signature from the original app: uninstall the original first. SHA-256: ${sha}"
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          cat > notes.md <<NOTES
+          Flickverse V4.0.0 with the ad SDKs switched off (see noads/README.md for exactly what is patched).
+
+          **Install:** uninstall the original app first (this build has a different signature, so Android refuses to update over it), then install this APK.
+          Personal-use build, signed with the throw-away key in noads/signing/.
+
+          **Status:** structure/signature/alignment checks pass. Emulator smoke test result: \`${SMOKE}\` (details: ${run_url}). Not yet confirmed on a physical phone.
+
+          SHA-256: \`${sha}\`
+          NOTES
+          sed -i 's/^          //' notes.md
+          gh release create "$tag" build/Flickverse-V4.0.0-noads.apk --repo "$GITHUB_REPOSITORY" --prerelease \
+            --title "Flickverse V4.0.0 (no ads) - $tag" --notes-file notes.md
+          echo "RELEASE: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/$tag"
