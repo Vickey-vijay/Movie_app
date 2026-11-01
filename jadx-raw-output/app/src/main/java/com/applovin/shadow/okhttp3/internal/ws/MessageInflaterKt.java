@@ -1,0 +1,7 @@
+package com.applovin.shadow.okhttp3.internal.ws;
+
+/* JADX INFO: compiled from: MessageInflater.kt */
+/* JADX INFO: loaded from: classes6.dex */
+public final class MessageInflaterKt {
+    private static final int OCTETS_TO_ADD_BEFORE_INFLATION = 65535;
+}

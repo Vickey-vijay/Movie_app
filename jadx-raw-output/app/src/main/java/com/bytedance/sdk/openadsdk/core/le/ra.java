@@ -1,0 +1,48 @@
+package com.bytedance.sdk.openadsdk.core.le;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.safedk.android.analytics.brandsafety.DetectTouchUtils;
+import com.safedk.android.utils.g;
+
+/* JADX INFO: loaded from: classes11.dex */
+public class ra extends RelativeLayout {
+    public ra(@NonNull Context context) {
+        super(context);
+    }
+
+    @Override // android.view.ViewGroup, android.view.View
+    public boolean dispatchTouchEvent(MotionEvent me2) {
+        DetectTouchUtils.viewOnTouch(g.f44975u, this, me2);
+        return super.dispatchTouchEvent(me2);
+    }
+
+    public ra(@NonNull Context context, @Nullable AttributeSet attributeSet) {
+        super(context, attributeSet, 0);
+    }
+
+    @Override // android.widget.RelativeLayout, android.view.View
+    public void onMeasure(int i10, int i11) {
+        super.onMeasure(i10, i11);
+    }
+
+    @Override // android.widget.RelativeLayout
+    public void setGravity(int i10) {
+        super.setGravity(bly.ouw(i10));
+    }
+
+    @Override // android.view.View
+    public void setLayoutParams(ViewGroup.LayoutParams layoutParams) {
+        super.setLayoutParams(bly.ouw(this, layoutParams));
+    }
+
+    @Override // android.view.View
+    public void setPadding(int i10, int i11, int i12, int i13) {
+        super.setPaddingRelative(i10, i11, i12, i13);
+    }
+}

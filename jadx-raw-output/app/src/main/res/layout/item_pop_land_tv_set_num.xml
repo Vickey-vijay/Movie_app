@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_click"
+    android:tag="layout/item_pop_land_tv_set_num_0"
+    android:layout_width="@dimen/dp_50"
+    android:layout_height="@dimen/dp_50"
+    android:layout_marginBottom="@dimen/dp_5">
+    <TextView
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/color_42BD56"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:id="@+id/tv_name"
+        android:background="@drawable/bg_home_search_tv_set_num_selector"
+        android:paddingLeft="@dimen/dp_1"
+        android:paddingRight="@dimen/dp_1"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:text="1"
+        android:maxLines="1"/>
+    <ImageView
+        android:id="@+id/iv_is_play"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_2"
+        android:layout_marginBottom="@dimen/dp_1"
+        android:src="@drawable/ic_video_is_play"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

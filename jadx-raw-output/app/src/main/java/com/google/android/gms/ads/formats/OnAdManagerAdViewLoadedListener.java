@@ -1,0 +1,10 @@
+package com.google.android.gms.ads.formats;
+
+import androidx.annotation.NonNull;
+import com.google.android.gms.ads.admanager.AdManagerAdView;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads-api@@24.9.0 */
+/* JADX INFO: loaded from: classes2.dex */
+public interface OnAdManagerAdViewLoadedListener {
+    void onAdManagerAdViewLoaded(@NonNull AdManagerAdView adManagerAdView);
+}

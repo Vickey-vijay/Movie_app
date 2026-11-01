@@ -1,0 +1,90 @@
+package androidx.room;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.os.RemoteCallbackList;
+import android.os.RemoteException;
+import android.util.Log;
+import androidx.annotation.Nullable;
+import androidx.annotation.RestrictTo;
+import java.util.HashMap;
+
+/* JADX INFO: loaded from: classes4.dex */
+@RestrictTo({RestrictTo.Scope.LIBRARY_GROUP_PREFIX})
+public class MultiInstanceInvalidationService extends Service {
+    public int mMaxClientId = 0;
+    public final HashMap<Integer, String> mClientNames = new HashMap<>();
+    public final RemoteCallbackList<IMultiInstanceInvalidationCallback> mCallbackList = new RemoteCallbackList<IMultiInstanceInvalidationCallback>() { // from class: androidx.room.MultiInstanceInvalidationService.1
+        @Override // android.os.RemoteCallbackList
+        public void onCallbackDied(IMultiInstanceInvalidationCallback iMultiInstanceInvalidationCallback, Object obj) {
+            MultiInstanceInvalidationService.this.mClientNames.remove(Integer.valueOf(((Integer) obj).intValue()));
+        }
+    };
+    private final IMultiInstanceInvalidationService.Stub mBinder = new IMultiInstanceInvalidationService.Stub() { // from class: androidx.room.MultiInstanceInvalidationService.2
+        @Override // androidx.room.IMultiInstanceInvalidationService
+        public int registerCallback(IMultiInstanceInvalidationCallback iMultiInstanceInvalidationCallback, String str) {
+            if (str == null) {
+                return 0;
+            }
+            synchronized (MultiInstanceInvalidationService.this.mCallbackList) {
+                MultiInstanceInvalidationService multiInstanceInvalidationService = MultiInstanceInvalidationService.this;
+                int i10 = multiInstanceInvalidationService.mMaxClientId + 1;
+                multiInstanceInvalidationService.mMaxClientId = i10;
+                if (multiInstanceInvalidationService.mCallbackList.register(iMultiInstanceInvalidationCallback, Integer.valueOf(i10))) {
+                    MultiInstanceInvalidationService.this.mClientNames.put(Integer.valueOf(i10), str);
+                    return i10;
+                }
+                MultiInstanceInvalidationService.this.mMaxClientId--;
+                return 0;
+            }
+        }
+
+        @Override // androidx.room.IMultiInstanceInvalidationService
+        public void broadcastInvalidation(int i10, String[] strArr) {
+            synchronized (MultiInstanceInvalidationService.this.mCallbackList) {
+                try {
+                    String str = MultiInstanceInvalidationService.this.mClientNames.get(Integer.valueOf(i10));
+                    if (str == null) {
+                        Log.w(Room.LOG_TAG, "Remote invalidation client ID not registered");
+                        return;
+                    }
+                    int iBeginBroadcast = MultiInstanceInvalidationService.this.mCallbackList.beginBroadcast();
+                    for (int i11 = 0; i11 < iBeginBroadcast; i11++) {
+                        try {
+                            int iIntValue = ((Integer) MultiInstanceInvalidationService.this.mCallbackList.getBroadcastCookie(i11)).intValue();
+                            String str2 = MultiInstanceInvalidationService.this.mClientNames.get(Integer.valueOf(iIntValue));
+                            if (i10 != iIntValue && str.equals(str2)) {
+                                try {
+                                    ((IMultiInstanceInvalidationCallback) MultiInstanceInvalidationService.this.mCallbackList.getBroadcastItem(i11)).onInvalidation(strArr);
+                                } catch (RemoteException e10) {
+                                    Log.w(Room.LOG_TAG, "Error invoking a remote callback", e10);
+                                }
+                            }
+                        } catch (Throwable th2) {
+                            MultiInstanceInvalidationService.this.mCallbackList.finishBroadcast();
+                            throw th2;
+                        }
+                    }
+                    MultiInstanceInvalidationService.this.mCallbackList.finishBroadcast();
+                } catch (Throwable th3) {
+                    throw th3;
+                }
+            }
+        }
+
+        @Override // androidx.room.IMultiInstanceInvalidationService
+        public void unregisterCallback(IMultiInstanceInvalidationCallback iMultiInstanceInvalidationCallback, int i10) {
+            synchronized (MultiInstanceInvalidationService.this.mCallbackList) {
+                MultiInstanceInvalidationService.this.mCallbackList.unregister(iMultiInstanceInvalidationCallback);
+                MultiInstanceInvalidationService.this.mClientNames.remove(Integer.valueOf(i10));
+            }
+        }
+    };
+
+    @Override // android.app.Service
+    @Nullable
+    public IBinder onBind(Intent intent) {
+        return this.mBinder;
+    }
+}

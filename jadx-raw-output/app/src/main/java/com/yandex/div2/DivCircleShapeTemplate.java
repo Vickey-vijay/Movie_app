@@ -1,0 +1,70 @@
+package com.yandex.div2;
+
+import com.yandex.div.internal.template.Field;
+import com.yandex.div.json.JSONSerializable;
+import com.yandex.div.json.JsonTemplate;
+import com.yandex.div.json.ParsingEnvironment;
+import com.yandex.div.json.expressions.Expression;
+import com.yandex.div.serialization.BuiltInParserKt;
+import org.json.JSONObject;
+
+/* JADX INFO: compiled from: DivCircleShapeTemplate.kt */
+/* JADX INFO: loaded from: classes7.dex */
+public final class DivCircleShapeTemplate implements JSONSerializable, JsonTemplate<DivCircleShape> {
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public static final a f46602d = new a(null);
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public static final DivFixedSize f46603e = new DivFixedSize(null, Expression.Companion.constant$default(Expression.Companion, 10L, null, 2, null), 1, null);
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    public static final bk.p<ParsingEnvironment, JSONObject, DivCircleShapeTemplate> f46604f = new bk.p<ParsingEnvironment, JSONObject, DivCircleShapeTemplate>() { // from class: com.yandex.div2.DivCircleShapeTemplate$Companion$CREATOR$1
+        @Override // bk.p
+        /* JADX INFO: renamed from: invoke, reason: avoid collision after fix types in other method and merged with bridge method [inline-methods] */
+        public final DivCircleShapeTemplate mo1invoke(ParsingEnvironment parsingEnvironment, JSONObject jSONObject) {
+            return new DivCircleShapeTemplate(parsingEnvironment, null, false, jSONObject, 6, null);
+        }
+    };
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final Field<Expression<Integer>> f46605a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final Field<DivFixedSizeTemplate> f46606b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public final Field<DivStrokeTemplate> f46607c;
+
+    /* JADX INFO: compiled from: DivCircleShapeTemplate.kt */
+    public static final class a {
+        public a() {
+        }
+
+        public /* synthetic */ a(ck.i iVar) {
+            this();
+        }
+    }
+
+    public DivCircleShapeTemplate(Field<Expression<Integer>> field, Field<DivFixedSizeTemplate> field2, Field<DivStrokeTemplate> field3) {
+        this.f46605a = field;
+        this.f46606b = field2;
+        this.f46607c = field3;
+    }
+
+    @Override // com.yandex.div.json.JSONSerializable
+    public JSONObject writeToJSON() {
+        return BuiltInParserKt.getBuiltInParserComponent().Y1().getValue().serialize(BuiltInParserKt.getBuiltInParsingContext(), this);
+    }
+
+    public /* synthetic */ DivCircleShapeTemplate(ParsingEnvironment parsingEnvironment, DivCircleShapeTemplate divCircleShapeTemplate, boolean z10, JSONObject jSONObject, int i10, ck.i iVar) {
+        this(parsingEnvironment, (i10 & 2) != 0 ? null : divCircleShapeTemplate, (i10 & 4) != 0 ? false : z10, jSONObject);
+    }
+
+    /* JADX WARN: Illegal instructions before constructor call */
+    public DivCircleShapeTemplate(ParsingEnvironment parsingEnvironment, DivCircleShapeTemplate divCircleShapeTemplate, boolean z10, JSONObject jSONObject) {
+        Field.Companion companion = Field.Companion;
+        this(companion.nullField(false), companion.nullField(false), companion.nullField(false));
+        throw new UnsupportedOperationException("Do not use this constructor directly.");
+    }
+}

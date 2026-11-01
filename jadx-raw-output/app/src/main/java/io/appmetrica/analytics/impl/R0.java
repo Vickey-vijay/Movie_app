@@ -1,0 +1,24 @@
+package io.appmetrica.analytics.impl;
+
+/* JADX INFO: loaded from: classes.dex */
+public final class R0 implements Runnable {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final /* synthetic */ boolean f55813a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final /* synthetic */ C4558u1 f55814b;
+
+    public R0(C4558u1 c4558u1, boolean z10) {
+        this.f55814b = c4558u1;
+        this.f55813a = z10;
+    }
+
+    @Override // java.lang.Runnable
+    public final void run() {
+        C4682z0 c4682z0 = this.f55814b.f57743a;
+        boolean z10 = this.f55813a;
+        c4682z0.getClass();
+        C4657y0.c().a(z10);
+    }
+}

@@ -1,0 +1,30 @@
+package com.google.android.gms.internal.ads;
+
+import java.util.Objects;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads@@24.9.0 */
+/* JADX INFO: loaded from: classes8.dex */
+final class zzaby implements zzadp {
+    public final /* synthetic */ zzuk zza;
+    public final /* synthetic */ int zzb;
+    public final /* synthetic */ long zzc;
+    public final /* synthetic */ zzacc zzd;
+
+    public zzaby(zzacc zzaccVar, zzuk zzukVar, int i10, long j10) {
+        this.zza = zzukVar;
+        this.zzb = i10;
+        this.zzc = j10;
+        Objects.requireNonNull(zzaccVar);
+        this.zzd = zzaccVar;
+    }
+
+    @Override // com.google.android.gms.internal.ads.zzadp
+    public final void zza(long j10) {
+        this.zzd.zzay(this.zza, this.zzb, this.zzc, j10);
+    }
+
+    @Override // com.google.android.gms.internal.ads.zzadp
+    public final void zzb() {
+        this.zzd.zzav(this.zza, this.zzb, this.zzc);
+    }
+}

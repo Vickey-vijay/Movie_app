@@ -1,0 +1,267 @@
+package com.bytedance.sdk.openadsdk.ko;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import com.bytedance.sdk.component.utils.vpp;
+import com.bytedance.sdk.openadsdk.utils.osn;
+import com.bytedance.sdk.openadsdk.utils.rn;
+import com.safedk.android.analytics.brandsafety.DetectTouchUtils;
+import com.safedk.android.utils.g;
+
+/* JADX INFO: loaded from: classes11.dex */
+public final class mwh extends com.bytedance.sdk.openadsdk.core.le.ra {
+    public mwh(Context context) {
+        this(context, null);
+    }
+
+    @Override // com.bytedance.sdk.openadsdk.core.le.ra, android.view.ViewGroup, android.view.View
+    public boolean dispatchTouchEvent(MotionEvent me2) {
+        DetectTouchUtils.viewOnTouch(g.f44975u, this, me2);
+        return super.dispatchTouchEvent(me2);
+    }
+
+    /* JADX INFO: Access modifiers changed from: protected */
+    @Override // com.bytedance.sdk.openadsdk.core.le.ra, android.widget.RelativeLayout, android.view.View
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (1 == 0) {
+            setMeasuredDimension(0, 0);
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+    }
+
+    private mwh(Context context, AttributeSet attributeSet) {
+        this(context, attributeSet, (byte) 0);
+    }
+
+    private mwh(Context context, AttributeSet attributeSet, byte b10) {
+        super(context, attributeSet);
+        setId(520093726);
+        setBackgroundColor(-1);
+        com.bytedance.sdk.openadsdk.core.le.ra raVar = new com.bytedance.sdk.openadsdk.core.le.ra(context);
+        raVar.setId(rn.f13412fn);
+        raVar.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
+        raVar.setBackgroundColor(0);
+        raVar.setGravity(17);
+        addView(raVar);
+        View yuVar = new com.bytedance.sdk.openadsdk.core.le.yu(context);
+        yuVar.setId(rn.byv);
+        yuVar.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
+        raVar.addView(yuVar);
+        com.bytedance.sdk.openadsdk.core.le.le leVar = new com.bytedance.sdk.openadsdk.core.le.le(context);
+        leVar.setId(rn.ehk);
+        int iOuw = osn.ouw(context, 60.0f);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(iOuw, iOuw);
+        layoutParams.addRule(13);
+        leVar.setLayoutParams(layoutParams);
+        leVar.setIndeterminateDrawable(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_video_loading_progress_bar"));
+        raVar.addView(leVar);
+        com.bytedance.sdk.openadsdk.core.le.fkw fkwVar = new com.bytedance.sdk.openadsdk.core.le.fkw(context);
+        fkwVar.setId(rn.xwt);
+        RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(-2, -2);
+        layoutParams2.addRule(13);
+        fkwVar.setLayoutParams(layoutParams2);
+        fkwVar.setGravity(1);
+        fkwVar.setOrientation(1);
+        fkwVar.setVisibility(8);
+        raVar.addView(fkwVar);
+        com.bytedance.sdk.openadsdk.core.le.yu yuVar2 = new com.bytedance.sdk.openadsdk.core.le.yu(context);
+        yuVar2.setId(rn.f13411fg);
+        yuVar2.setLayoutParams(new LinearLayout.LayoutParams(-2, -2));
+        yuVar2.setImageDrawable(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_refreshing_video_textpage"));
+        yuVar2.setScaleType(ImageView.ScaleType.CENTER);
+        fkwVar.addView(yuVar2);
+        com.bytedance.sdk.openadsdk.core.le.pno pnoVar = new com.bytedance.sdk.openadsdk.core.le.pno(context);
+        pnoVar.setId(rn.baa);
+        pnoVar.setLayoutParams(new LinearLayout.LayoutParams(-2, -2));
+        pnoVar.setText(vpp.ouw(context, "tt_video_retry_des_txt"));
+        pnoVar.setTextColor(Color.parseColor("#999999"));
+        fkwVar.addView(pnoVar);
+        com.bytedance.sdk.openadsdk.core.le.yu yuVar3 = new com.bytedance.sdk.openadsdk.core.le.yu(context);
+        yuVar3.setId(rn.f13417ki);
+        RelativeLayout.LayoutParams layoutParams3 = new RelativeLayout.LayoutParams(-2, -2);
+        layoutParams3.addRule(13);
+        yuVar3.setLayoutParams(layoutParams3);
+        yuVar3.setScaleType(ImageView.ScaleType.CENTER);
+        yuVar3.setImageDrawable(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_play_movebar_textpage"));
+        yuVar3.setVisibility(8);
+        addView(yuVar3);
+        com.bytedance.sdk.openadsdk.core.le.yu yuVar4 = new com.bytedance.sdk.openadsdk.core.le.yu(context);
+        yuVar4.setId(rn.f13425nn);
+        int iOuw2 = osn.ouw(context, 30.0f);
+        RelativeLayout.LayoutParams layoutParams4 = new RelativeLayout.LayoutParams(iOuw2, iOuw2);
+        layoutParams4.addRule(21);
+        layoutParams4.addRule(11);
+        int iOuw3 = osn.ouw(context, 7.0f);
+        layoutParams4.setMarginEnd(iOuw3);
+        layoutParams4.rightMargin = iOuw3;
+        layoutParams4.topMargin = iOuw3;
+        yuVar4.setLayoutParams(layoutParams4);
+        yuVar4.setBackground(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_detail_video_btn_bg"));
+        yuVar4.setScaleType(ImageView.ScaleType.CENTER);
+        yuVar4.setImageDrawable(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_close_move_detail"));
+        addView(yuVar4);
+        com.bytedance.sdk.openadsdk.core.le.pno pnoVar2 = new com.bytedance.sdk.openadsdk.core.le.pno(context);
+        pnoVar2.setId(rn.zjq);
+        RelativeLayout.LayoutParams layoutParams5 = new RelativeLayout.LayoutParams(-1, -2);
+        layoutParams5.addRule(9);
+        layoutParams5.addRule(20);
+        layoutParams5.addRule(10);
+        pnoVar2.setLayoutParams(layoutParams5);
+        pnoVar2.setBackground(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_video_black_desc_gradient"));
+        pnoVar2.setEllipsize(TextUtils.TruncateAt.END);
+        pnoVar2.setMaxLines(2);
+        int iOuw4 = osn.ouw(context, 15.0f);
+        pnoVar2.setPadding(iOuw4, osn.ouw(context, 14.0f), iOuw4, 0);
+        pnoVar2.setSingleLine(false);
+        pnoVar2.setTextColor(-1);
+        pnoVar2.setTextSize(2, 17.0f);
+        pnoVar2.setVisibility(8);
+        addView(pnoVar2);
+        com.bytedance.sdk.openadsdk.core.le.ra raVar2 = new com.bytedance.sdk.openadsdk.core.le.ra(context);
+        raVar2.setId(rn.eot);
+        RelativeLayout.LayoutParams layoutParams6 = new RelativeLayout.LayoutParams(-1, -2);
+        layoutParams6.addRule(10);
+        raVar2.setLayoutParams(layoutParams6);
+        raVar2.setBackground(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_video_black_desc_gradient"));
+        raVar2.setGravity(16);
+        raVar2.setVisibility(8);
+        addView(raVar2);
+        com.bytedance.sdk.openadsdk.core.le.yu yuVar5 = new com.bytedance.sdk.openadsdk.core.le.yu(context);
+        int i10 = rn.mu;
+        yuVar5.setId(i10);
+        RelativeLayout.LayoutParams layoutParams7 = new RelativeLayout.LayoutParams(-2, -1);
+        layoutParams7.addRule(15);
+        int iOuw5 = osn.ouw(context, 12.0f);
+        layoutParams7.leftMargin = iOuw5;
+        layoutParams7.setMarginStart(iOuw5);
+        yuVar5.setLayoutParams(layoutParams7);
+        yuVar5.setScaleType(ImageView.ScaleType.CENTER);
+        yuVar5.setImageDrawable(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_leftbackbutton_titlebar_photo_preview"));
+        raVar2.addView(yuVar5);
+        com.bytedance.sdk.openadsdk.core.le.pno pnoVar3 = new com.bytedance.sdk.openadsdk.core.le.pno(context);
+        pnoVar3.setId(rn.xne);
+        RelativeLayout.LayoutParams layoutParams8 = new RelativeLayout.LayoutParams(-2, -1);
+        layoutParams8.addRule(15);
+        int iOuw6 = osn.ouw(context, 16.0f);
+        layoutParams8.leftMargin = iOuw6;
+        layoutParams8.rightMargin = iOuw;
+        layoutParams8.setMarginStart(iOuw6);
+        layoutParams8.setMarginEnd(iOuw);
+        layoutParams8.addRule(17, i10);
+        int i11 = rn.lai;
+        layoutParams8.addRule(0, i11);
+        layoutParams8.addRule(1, i10);
+        layoutParams8.addRule(16, i11);
+        pnoVar3.setLayoutParams(layoutParams8);
+        pnoVar3.setEllipsize(TextUtils.TruncateAt.END);
+        pnoVar3.setGravity(16);
+        pnoVar3.setMaxLines(1);
+        pnoVar3.setSingleLine(true);
+        pnoVar3.setTextColor(-1);
+        pnoVar3.setTextSize(2, 17.0f);
+        raVar2.addView(pnoVar3);
+        com.bytedance.sdk.openadsdk.core.le.fkw fkwVar2 = new com.bytedance.sdk.openadsdk.core.le.fkw(context);
+        fkwVar2.setId(i11);
+        RelativeLayout.LayoutParams layoutParams9 = new RelativeLayout.LayoutParams(-2, -2);
+        layoutParams9.addRule(21);
+        layoutParams9.addRule(11);
+        int iOuw7 = osn.ouw(context, 14.0f);
+        layoutParams9.rightMargin = iOuw7;
+        layoutParams9.setMarginEnd(iOuw7);
+        fkwVar2.setLayoutParams(layoutParams9);
+        fkwVar2.setGravity(16);
+        fkwVar2.setOrientation(1);
+        raVar2.addView(fkwVar2);
+        com.bytedance.sdk.openadsdk.core.le.pno pnoVar4 = new com.bytedance.sdk.openadsdk.core.le.pno(context);
+        pnoVar4.setId(rn.ajl);
+        LinearLayout.LayoutParams layoutParams10 = new LinearLayout.LayoutParams(-2, -2);
+        layoutParams10.gravity = 1;
+        pnoVar4.setLayoutParams(layoutParams10);
+        pnoVar4.setGravity(16);
+        pnoVar4.setMaxLines(1);
+        pnoVar4.setSingleLine(true);
+        pnoVar4.setTextColor(-1);
+        pnoVar4.setTextSize(2, 12.0f);
+        fkwVar2.addView(pnoVar4);
+        com.bytedance.sdk.openadsdk.core.le.fkw fkwVar3 = new com.bytedance.sdk.openadsdk.core.le.fkw(context);
+        fkwVar3.setId(rn.f13434sm);
+        RelativeLayout.LayoutParams layoutParams11 = new RelativeLayout.LayoutParams(-2, osn.ouw(context, 40.0f));
+        layoutParams11.addRule(12);
+        layoutParams11.addRule(21);
+        layoutParams11.addRule(11);
+        fkwVar3.setLayoutParams(layoutParams11);
+        fkwVar3.setGravity(16);
+        fkwVar3.setOrientation(0);
+        fkwVar3.setVisibility(8);
+        addView(fkwVar3);
+        com.bytedance.sdk.openadsdk.core.le.pno pnoVar5 = new com.bytedance.sdk.openadsdk.core.le.pno(context);
+        pnoVar5.setId(rn.f13439vf);
+        LinearLayout.LayoutParams layoutParams12 = new LinearLayout.LayoutParams(-2, -2);
+        layoutParams12.leftMargin = iOuw6;
+        layoutParams12.rightMargin = iOuw5;
+        layoutParams12.setMarginEnd(iOuw5);
+        layoutParams12.setMarginStart(iOuw6);
+        pnoVar5.setLayoutParams(layoutParams12);
+        pnoVar5.setText(vpp.ouw(context, "tt_00_00"));
+        pnoVar5.setTextColor(-1);
+        pnoVar5.setTextSize(2, 10.0f);
+        fkwVar3.addView(pnoVar5);
+        SeekBar seekBar = new SeekBar(context);
+        seekBar.setId(rn.kq);
+        LinearLayout.LayoutParams layoutParams13 = new LinearLayout.LayoutParams(0, osn.ouw(context, 5.0f));
+        layoutParams13.gravity = 16;
+        seekBar.setLayoutParams(layoutParams13);
+        seekBar.setMax(100);
+        seekBar.setPadding(0, 0, 0, 0);
+        seekBar.setProgressDrawable(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_seek_progress"));
+        seekBar.setThumb(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_seek_thumb"));
+        seekBar.setThumbOffset(0);
+        fkwVar3.addView(seekBar);
+        com.bytedance.sdk.openadsdk.core.le.pno pnoVar6 = new com.bytedance.sdk.openadsdk.core.le.pno(context);
+        pnoVar6.setId(rn.nbp);
+        LinearLayout.LayoutParams layoutParams14 = new LinearLayout.LayoutParams(-2, -2);
+        layoutParams14.leftMargin = iOuw5;
+        layoutParams14.rightMargin = iOuw6;
+        layoutParams14.setMarginEnd(iOuw6);
+        layoutParams14.setMarginStart(iOuw5);
+        pnoVar6.setLayoutParams(layoutParams14);
+        pnoVar6.setText(vpp.ouw(context, "tt_00_00"));
+        pnoVar6.setTextColor(-1);
+        pnoVar6.setTextSize(2, 10.0f);
+        fkwVar3.addView(pnoVar6);
+        com.bytedance.sdk.openadsdk.core.le.yu yuVar6 = new com.bytedance.sdk.openadsdk.core.le.yu(context);
+        yuVar6.setId(rn.cu);
+        yuVar6.setLayoutParams(new LinearLayout.LayoutParams(-2, -1));
+        yuVar6.setPadding(iOuw6, 0, iOuw6, 0);
+        yuVar6.setScaleType(ImageView.ScaleType.CENTER);
+        yuVar6.setVisibility(8);
+        yuVar6.setImageDrawable(vpp.lh(context, "tt_enlarge_video"));
+        fkwVar3.addView(yuVar6);
+        View rylVar = new ryl(context);
+        rylVar.setId(rn.f13423ln);
+        rylVar.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
+        addView(rylVar);
+        com.bytedance.sdk.openadsdk.core.le.pno pnoVar7 = new com.bytedance.sdk.openadsdk.core.le.pno(context);
+        pnoVar7.setId(rn.swm);
+        RelativeLayout.LayoutParams layoutParams15 = new RelativeLayout.LayoutParams(-2, -2);
+        layoutParams15.leftMargin = iOuw5;
+        layoutParams15.addRule(9);
+        layoutParams15.addRule(20);
+        pnoVar7.setLayoutParams(layoutParams15);
+        pnoVar7.setBackgroundColor(Color.parseColor("#00000000"));
+        pnoVar7.setText("close");
+        pnoVar7.setMinHeight(osn.ouw(context, 44.0f));
+        pnoVar7.setCompoundDrawablesWithIntrinsicBounds(com.bytedance.sdk.openadsdk.utils.cf.ouw(context, "tt_shadow_btn_back"), (Drawable) null, (Drawable) null, (Drawable) null);
+        addView(pnoVar7);
+    }
+}

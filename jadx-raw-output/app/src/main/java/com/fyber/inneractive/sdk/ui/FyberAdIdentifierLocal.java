@@ -1,0 +1,182 @@
+package com.fyber.inneractive.sdk.ui;
+
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.text.TextUtils;
+import android.util.Property;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.fyber.inneractive.sdk.R;
+import com.fyber.inneractive.sdk.config.IAConfigManager;
+import com.fyber.inneractive.sdk.config.global.r;
+import com.fyber.inneractive.sdk.network.w0;
+import com.fyber.inneractive.sdk.util.IAlog;
+import com.fyber.inneractive.sdk.util.o;
+import com.safedk.android.analytics.brandsafety.creatives.CreativeInfoManager;
+import com.safedk.android.utils.Logger;
+
+/* JADX INFO: loaded from: classes2.dex */
+public class FyberAdIdentifierLocal extends IFyberAdIdentifier implements View.OnClickListener {
+
+    /* JADX INFO: renamed from: m, reason: collision with root package name */
+    public ImageView f18514m;
+
+    /* JADX INFO: renamed from: n, reason: collision with root package name */
+    public TextView f18515n;
+
+    /* JADX INFO: renamed from: o, reason: collision with root package name */
+    public boolean f18516o;
+
+    /* JADX INFO: renamed from: p, reason: collision with root package name */
+    public Animator f18517p;
+
+    /* JADX INFO: renamed from: q, reason: collision with root package name */
+    public float f18518q;
+
+    /* JADX INFO: renamed from: r, reason: collision with root package name */
+    public Bitmap f18519r;
+
+    @Override // com.fyber.inneractive.sdk.ui.IFyberAdIdentifier
+    public final void a(ViewGroup viewGroup) {
+        LayoutInflater layoutInflaterFrom = LayoutInflater.from(viewGroup.getContext());
+        ViewGroup viewGroup2 = (ViewGroup) viewGroup.findViewById(R.id.ia_identifier_overlay);
+        int i10 = 0;
+        ViewGroup viewGroup3 = (ViewGroup) layoutInflaterFrom.inflate(R.layout.ia_layout_fyber_ad_identifier, viewGroup2, false);
+        this.f18514m = (ImageView) viewGroup3.findViewById(R.id.ia_fyber_identifier_image);
+        TextView textView = (TextView) viewGroup3.findViewById(R.id.ia_fyber_identifier_text);
+        this.f18515n = textView;
+        if (this.f18535j) {
+            int i11 = this.f18527b;
+            int i12 = this.f18528c;
+            if (textView != null && textView.getLayoutParams() != null) {
+                textView.getLayoutParams().width = o.b(i11);
+                textView.getLayoutParams().height = o.b(i12);
+            }
+            ImageView imageView = this.f18514m;
+            int i13 = this.f18529d;
+            int i14 = this.f18530e;
+            if (imageView != null && imageView.getLayoutParams() != null) {
+                imageView.getLayoutParams().width = o.b(i13);
+                imageView.getLayoutParams().height = o.b(i14);
+            }
+            TextView textView2 = this.f18515n;
+            int i15 = this.f18531f;
+            if (textView2 instanceof TextView) {
+                textView2.setTextSize(i15);
+            }
+            a(this.f18514m, this.f18532g);
+            this.f18515n.setOnClickListener(this);
+            this.f18515n.setText(this.f18533h);
+            String str = this.f18534i;
+            if (!TextUtils.isEmpty(str)) {
+                IAConfigManager.O.f15024s.a(new w0(new b(this), viewGroup2.getContext(), new com.fyber.inneractive.sdk.cache.b(str)));
+            }
+        }
+        IFyberAdIdentifier.Corner corner = this.f18536k;
+        if (corner == IFyberAdIdentifier.Corner.TOP_LEFT || corner == IFyberAdIdentifier.Corner.BOTTOM_LEFT) {
+            viewGroup3.removeView(this.f18515n);
+            viewGroup3.addView(this.f18515n);
+            viewGroup3.setLayoutDirection(0);
+        }
+        viewGroup3.addOnLayoutChangeListener(new c(this));
+        this.f18514m.setOnClickListener(this);
+        a();
+        viewGroup2.addView(viewGroup3);
+        IFyberAdIdentifier.Corner corner2 = this.f18536k;
+        corner2.getClass();
+        int i16 = j.f18550a[corner2.ordinal()];
+        if (i16 == 1) {
+            i10 = 51;
+        } else if (i16 == 2) {
+            i10 = 53;
+        } else if (i16 == 3) {
+            i10 = 83;
+        } else if (i16 == 4) {
+            i10 = 85;
+        }
+        o.a(viewGroup3, i10);
+    }
+
+    @Override // android.view.View.OnClickListener
+    public final void onClick(View view) {
+        Logger.d("DTExchange|SafeDK: Execution> Lcom/fyber/inneractive/sdk/ui/FyberAdIdentifierLocal;->onClick(Landroid/view/View;)V");
+        CreativeInfoManager.onViewClicked(com.safedk.android.utils.g.f44970p, view);
+        safedk_FyberAdIdentifierLocal_onClick_89450e1d2505e7faa72ce8c17442a8db(view);
+    }
+
+    public void safedk_FyberAdIdentifierLocal_onClick_89450e1d2505e7faa72ce8c17442a8db(View p10) {
+        if (p10 != this.f18514m) {
+            if (p10 == this.f18515n && this.f18537l == com.fyber.inneractive.sdk.config.global.features.a.OPEN) {
+                a();
+                IFyberAdIdentifier.ClickListener clickListener = this.f18526a;
+                if (clickListener != null) {
+                    clickListener.a();
+                    return;
+                }
+                return;
+            }
+            return;
+        }
+        if (this.f18517p != null) {
+            return;
+        }
+        AnimatorSet animatorSet = new AnimatorSet();
+        ImageView imageView = this.f18514m;
+        Property property = View.ROTATION_X;
+        ObjectAnimator objectAnimatorOfFloat = ObjectAnimator.ofFloat(imageView, (Property<ImageView, Float>) property, 90.0f);
+        ObjectAnimator objectAnimatorOfInt = ObjectAnimator.ofInt(this.f18514m, "imageAlpha", 255, 25);
+        AnimatorSet animatorSet2 = new AnimatorSet();
+        animatorSet2.playTogether(objectAnimatorOfFloat, objectAnimatorOfInt);
+        animatorSet2.addListener(new d(this, animatorSet));
+        animatorSet2.setDuration(225L);
+        this.f18517p = animatorSet2;
+        animatorSet2.start();
+        ObjectAnimator objectAnimatorOfFloat2 = ObjectAnimator.ofFloat(this.f18514m, (Property<ImageView, Float>) property, 0.0f);
+        ObjectAnimator objectAnimatorOfInt2 = ObjectAnimator.ofInt(this.f18514m, "imageAlpha", 25, 255);
+        AnimatorSet animatorSet3 = new AnimatorSet();
+        animatorSet3.playTogether(objectAnimatorOfFloat2, objectAnimatorOfInt2);
+        animatorSet3.setDuration(225L);
+        ObjectAnimator objectAnimatorOfFloat3 = ObjectAnimator.ofFloat(this.f18515n, (Property<TextView, Float>) View.TRANSLATION_X, this.f18516o ? this.f18518q : 0.0f);
+        objectAnimatorOfFloat3.setDuration(450L);
+        animatorSet.setDuration(450L);
+        animatorSet.playTogether(objectAnimatorOfFloat3, animatorSet3);
+        animatorSet.addListener(new e(this));
+    }
+
+    public FyberAdIdentifierLocal(r rVar) {
+        super(rVar);
+        this.f18516o = false;
+        this.f18518q = 0.0f;
+    }
+
+    public final void a() {
+        this.f18516o = false;
+        this.f18514m.setImageResource(R.drawable.ia_fyber_info_button);
+        a(this.f18514m, this.f18532g);
+        Animator animator = this.f18517p;
+        if (animator != null) {
+            animator.removeAllListeners();
+            this.f18517p = null;
+        }
+    }
+
+    public static void a(ImageView imageView, String str) {
+        if (!TextUtils.isEmpty(str)) {
+            try {
+                com.fyber.inneractive.sdk.widget.a.a(imageView, ColorStateList.valueOf(Color.parseColor(str)));
+                return;
+            } catch (Exception unused) {
+                IAlog.f("could not parse color %s", str);
+                return;
+            }
+        }
+        com.fyber.inneractive.sdk.widget.a.a(imageView, null);
+    }
+}

@@ -1,0 +1,31 @@
+package com.google.android.gms.internal.ads;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads-api@@24.9.0 */
+/* JADX INFO: loaded from: classes2.dex */
+final class zzibk implements zzida {
+    private static final zzibk zza = new zzibk();
+
+    private zzibk() {
+    }
+
+    public static zzibk zza() {
+        return zza;
+    }
+
+    @Override // com.google.android.gms.internal.ads.zzida
+    public final boolean zzb(Class cls) {
+        return zzibr.class.isAssignableFrom(cls);
+    }
+
+    @Override // com.google.android.gms.internal.ads.zzida
+    public final zzicz zzc(Class cls) {
+        if (!zzibr.class.isAssignableFrom(cls)) {
+            throw new IllegalArgumentException("Unsupported message type: ".concat(cls.getName()));
+        }
+        try {
+            return (zzicz) zzibr.zzbt(cls.asSubclass(zzibr.class)).zzbs();
+        } catch (Exception e10) {
+            throw new RuntimeException("Unable to get message info for ".concat(cls.getName()), e10);
+        }
+    }
+}

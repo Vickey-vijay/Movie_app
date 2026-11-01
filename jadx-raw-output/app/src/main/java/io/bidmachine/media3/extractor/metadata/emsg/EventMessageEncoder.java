@@ -1,0 +1,43 @@
+package io.bidmachine.media3.extractor.metadata.emsg;
+
+import io.bidmachine.media3.common.util.UnstableApi;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+/* JADX INFO: loaded from: classes8.dex */
+@UnstableApi
+public final class EventMessageEncoder {
+    private final ByteArrayOutputStream byteArrayOutputStream;
+    private final DataOutputStream dataOutputStream;
+
+    public byte[] encode(EventMessage eventMessage) {
+        this.byteArrayOutputStream.reset();
+        try {
+            writeNullTerminatedString(this.dataOutputStream, eventMessage.schemeIdUri);
+            String str = eventMessage.value;
+            if (str == null) {
+                str = "";
+            }
+            writeNullTerminatedString(this.dataOutputStream, str);
+            this.dataOutputStream.writeLong(eventMessage.durationMs);
+            this.dataOutputStream.writeLong(eventMessage.f59896id);
+            this.dataOutputStream.write(eventMessage.messageData);
+            this.dataOutputStream.flush();
+            return this.byteArrayOutputStream.toByteArray();
+        } catch (IOException e10) {
+            throw new RuntimeException(e10);
+        }
+    }
+
+    public EventMessageEncoder() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(512);
+        this.byteArrayOutputStream = byteArrayOutputStream;
+        this.dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+    }
+
+    private static void writeNullTerminatedString(DataOutputStream dataOutputStream, String str) throws IOException {
+        dataOutputStream.writeBytes(str);
+        dataOutputStream.writeByte(0);
+    }
+}

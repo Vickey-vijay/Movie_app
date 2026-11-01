@@ -1,0 +1,28 @@
+package com.google.android.gms.internal.ads;
+
+import androidx.annotation.Nullable;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads@@24.9.0 */
+/* JADX INFO: loaded from: classes3.dex */
+public final class zzdid implements zzikg {
+    private final zzdhf zza;
+
+    private zzdid(zzdhf zzdhfVar) {
+        this.zza = zzdhfVar;
+    }
+
+    public static zzdid zzc(zzdhf zzdhfVar) {
+        return new zzdid(zzdhfVar);
+    }
+
+    @Nullable
+    public final zzfgg zza() {
+        return this.zza.zzo();
+    }
+
+    @Override // com.google.android.gms.internal.ads.zzikv, com.google.android.gms.internal.ads.zziku
+    @Nullable
+    public final /* synthetic */ Object zzb() {
+        return this.zza.zzo();
+    }
+}

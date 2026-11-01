@@ -1,0 +1,18 @@
+package com.google.android.gms.internal.ads;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads@@24.9.0 */
+/* JADX INFO: loaded from: classes10.dex */
+public final class zzfkv {
+    private zzfku zza = null;
+
+    public final void zza(zzfku zzfkuVar) {
+        this.zza = zzfkuVar;
+    }
+
+    public final void zzb() {
+        zzfku zzfkuVar = this.zza;
+        if (zzfkuVar != null) {
+            zzfkuVar.zza();
+        }
+    }
+}

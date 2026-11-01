@@ -1,0 +1,65 @@
+package com.google.android.gms.internal.ads;
+
+import android.os.RemoteException;
+import androidx.annotation.NonNull;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.mediation.Adapter;
+import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
+import com.google.android.gms.ads.mediation.MediationInterscrollerAd;
+import java.util.Objects;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads-api@@24.9.0 */
+/* JADX INFO: loaded from: classes9.dex */
+final class zzbum implements MediationAdLoadCallback {
+    public final /* synthetic */ zzbtz zza;
+    public final /* synthetic */ Adapter zzb;
+    public final /* synthetic */ zzbuu zzc;
+
+    @Override // com.google.android.gms.ads.mediation.MediationAdLoadCallback
+    public final void onFailure(@NonNull AdError adError) {
+        try {
+            String canonicalName = this.zzb.getClass().getCanonicalName();
+            int code = adError.getCode();
+            String message = adError.getMessage();
+            String domain = adError.getDomain();
+            StringBuilder sb2 = new StringBuilder(String.valueOf(canonicalName).length() + 41 + String.valueOf(code).length() + 17 + String.valueOf(message).length() + 16 + String.valueOf(domain).length());
+            sb2.append(canonicalName);
+            sb2.append("failed to load mediation ad: ErrorCode = ");
+            sb2.append(code);
+            sb2.append(". ErrorMessage = ");
+            sb2.append(message);
+            sb2.append(". ErrorDomain = ");
+            sb2.append(domain);
+            com.google.android.gms.ads.internal.util.client.zzo.zzd(sb2.toString());
+            zzbtz zzbtzVar = this.zza;
+            zzbtzVar.zzx(adError.zza());
+            zzbtzVar.zzw(adError.getCode(), adError.getMessage());
+            zzbtzVar.zzg(adError.getCode());
+        } catch (RemoteException e10) {
+            com.google.android.gms.ads.internal.util.client.zzo.zzg("", e10);
+        }
+    }
+
+    public zzbum(zzbuu zzbuuVar, zzbtz zzbtzVar, Adapter adapter) {
+        this.zza = zzbtzVar;
+        this.zzb = adapter;
+        Objects.requireNonNull(zzbuuVar);
+        this.zzc = zzbuuVar;
+    }
+
+    @Override // com.google.android.gms.ads.mediation.MediationAdLoadCallback
+    public final /* bridge */ /* synthetic */ Object onSuccess(Object obj) {
+        try {
+            this.zzc.zzT((MediationInterscrollerAd) obj);
+            this.zza.zzj();
+        } catch (RemoteException e10) {
+            com.google.android.gms.ads.internal.util.client.zzo.zzg("", e10);
+        }
+        return new zzbuk(this.zza);
+    }
+
+    @Override // com.google.android.gms.ads.mediation.MediationAdLoadCallback
+    public final void onFailure(String str) {
+        onFailure(new AdError(0, str, "undefined"));
+    }
+}

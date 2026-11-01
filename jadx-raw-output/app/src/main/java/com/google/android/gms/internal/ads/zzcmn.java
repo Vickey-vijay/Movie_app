@@ -1,0 +1,20 @@
+package com.google.android.gms.internal.ads;
+
+/* JADX INFO: compiled from: com.google.android.gms:play-services-ads@@24.9.0 */
+/* JADX INFO: loaded from: classes10.dex */
+public final class zzcmn implements zzikg {
+    private final zzcmc zza;
+
+    private zzcmn(zzcmc zzcmcVar) {
+        this.zza = zzcmcVar;
+    }
+
+    public static zzcmn zza(zzcmc zzcmcVar) {
+        return new zzcmn(zzcmcVar);
+    }
+
+    @Override // com.google.android.gms.internal.ads.zzikv, com.google.android.gms.internal.ads.zziku
+    public final /* synthetic */ Object zzb() {
+        return this.zza.zzg();
+    }
+}

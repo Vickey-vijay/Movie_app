@@ -1,0 +1,133 @@
+package com.bumptech.glide.disklrucache;
+
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+
+/* JADX INFO: loaded from: classes7.dex */
+class StrictLineReader implements Closeable {
+    private static final byte CR = 13;
+    private static final byte LF = 10;
+    private byte[] buf;
+    private final Charset charset;
+    private int end;
+
+    /* JADX INFO: renamed from: in, reason: collision with root package name */
+    private final InputStream f10429in;
+    private int pos;
+
+    public StrictLineReader(InputStream inputStream, Charset charset) {
+        this(inputStream, 8192, charset);
+    }
+
+    public StrictLineReader(InputStream inputStream, int i10, Charset charset) {
+        if (inputStream == null || charset == null) {
+            throw null;
+        }
+        if (i10 < 0) {
+            throw new IllegalArgumentException("capacity <= 0");
+        }
+        if (!charset.equals(Util.US_ASCII)) {
+            throw new IllegalArgumentException("Unsupported encoding");
+        }
+        this.f10429in = inputStream;
+        this.charset = charset;
+        this.buf = new byte[i10];
+    }
+
+    private void fillBuf() throws IOException {
+        InputStream inputStream = this.f10429in;
+        byte[] bArr = this.buf;
+        int i10 = inputStream.read(bArr, 0, bArr.length);
+        if (i10 == -1) {
+            throw new EOFException();
+        }
+        this.pos = 0;
+        this.end = i10;
+    }
+
+    @Override // java.io.Closeable, java.lang.AutoCloseable
+    public void close() throws IOException {
+        synchronized (this.f10429in) {
+            if (this.buf != null) {
+                this.buf = null;
+                this.f10429in.close();
+            }
+        }
+    }
+
+    public boolean hasUnterminatedLine() {
+        return this.end == -1;
+    }
+
+    /* JADX WARN: Code duplicated, block: B:19:0x002b  */
+    public String readLine() throws IOException {
+        int i10;
+        byte[] bArr;
+        int i11;
+        synchronized (this.f10429in) {
+            if (this.buf == null) {
+                throw new IOException("LineReader is closed");
+            }
+            if (this.pos >= this.end) {
+                fillBuf();
+            }
+            for (int i12 = this.pos; i12 != this.end; i12++) {
+                byte[] bArr2 = this.buf;
+                if (bArr2[i12] == 10) {
+                    int i13 = this.pos;
+                    if (i12 != i13) {
+                        i11 = i12 - 1;
+                        if (bArr2[i11] != 13) {
+                            i11 = i12;
+                        }
+                    } else {
+                        i11 = i12;
+                    }
+                    String str = new String(bArr2, i13, i11 - i13, this.charset.name());
+                    this.pos = i12 + 1;
+                    return str;
+                }
+            }
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream((this.end - this.pos) + 80) { // from class: com.bumptech.glide.disklrucache.StrictLineReader.1
+                @Override // java.io.ByteArrayOutputStream
+                public String toString() {
+                    int i14 = ((ByteArrayOutputStream) this).count;
+                    if (i14 > 0 && ((ByteArrayOutputStream) this).buf[i14 - 1] == 13) {
+                        i14--;
+                    }
+                    try {
+                        return new String(((ByteArrayOutputStream) this).buf, 0, i14, StrictLineReader.this.charset.name());
+                    } catch (UnsupportedEncodingException e10) {
+                        throw new AssertionError(e10);
+                    }
+                }
+            };
+            loop1: while (true) {
+                byte[] bArr3 = this.buf;
+                int i14 = this.pos;
+                byteArrayOutputStream.write(bArr3, i14, this.end - i14);
+                this.end = -1;
+                fillBuf();
+                i10 = this.pos;
+                while (i10 != this.end) {
+                    bArr = this.buf;
+                    if (bArr[i10] == 10) {
+                        break loop1;
+                    }
+                    i10++;
+                }
+            }
+            int i15 = this.pos;
+            if (i10 != i15) {
+                byteArrayOutputStream.write(bArr, i15, i10 - i15);
+            }
+            this.pos = i10 + 1;
+            return byteArrayOutputStream.toString();
+        }
+    }
+}

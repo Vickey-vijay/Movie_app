@@ -1,0 +1,61 @@
+package io.bidmachine.media3.common.text;
+
+import android.os.Bundle;
+import com.google.common.collect.ImmutableList;
+import io.bidmachine.media3.common.text.Cue;
+import io.bidmachine.media3.common.util.BundleCollectionUtil;
+import io.bidmachine.media3.common.util.UnstableApi;
+import io.bidmachine.media3.common.util.Util;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import m5.e;
+import yf.b;
+
+/* JADX INFO: loaded from: classes2.dex */
+public final class CueGroup {
+
+    @UnstableApi
+    public static final CueGroup EMPTY_TIME_ZERO = new CueGroup(ImmutableList.of(), 0);
+    private static final String FIELD_CUES = Util.intToStringMaxRadix(0);
+    private static final String FIELD_PRESENTATION_TIME_US = Util.intToStringMaxRadix(1);
+    public final ImmutableList<Cue> cues;
+
+    @UnstableApi
+    public final long presentationTimeUs;
+
+    @UnstableApi
+    public static CueGroup fromBundle(Bundle bundle) {
+        ArrayList parcelableArrayList = bundle.getParcelableArrayList(FIELD_CUES);
+        return new CueGroup(parcelableArrayList == null ? ImmutableList.of() : BundleCollectionUtil.fromBundleList(new b(), parcelableArrayList), bundle.getLong(FIELD_PRESENTATION_TIME_US));
+    }
+
+    @UnstableApi
+    public Bundle toBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(FIELD_CUES, BundleCollectionUtil.toBundleArrayList(filterOutBitmapCues(this.cues), new e() { // from class: yf.a
+            @Override // m5.e
+            public final Object apply(Object obj) {
+                return ((Cue) obj).toBinderBasedBundle();
+            }
+        }));
+        bundle.putLong(FIELD_PRESENTATION_TIME_US, this.presentationTimeUs);
+        return bundle;
+    }
+
+    @UnstableApi
+    public CueGroup(List<Cue> list, long j10) {
+        this.cues = ImmutableList.copyOf((Collection) list);
+        this.presentationTimeUs = j10;
+    }
+
+    private static ImmutableList<Cue> filterOutBitmapCues(List<Cue> list) {
+        ImmutableList.a aVarBuilder = ImmutableList.builder();
+        for (int i10 = 0; i10 < list.size(); i10++) {
+            if (list.get(i10).bitmap == null) {
+                aVarBuilder.a(list.get(i10));
+            }
+        }
+        return aVarBuilder.m();
+    }
+}

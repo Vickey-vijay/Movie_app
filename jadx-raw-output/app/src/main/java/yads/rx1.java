@@ -1,0 +1,13 @@
+package yads;
+
+import java.util.Map;
+
+/* JADX INFO: loaded from: classes4.dex */
+public abstract class rx1 {
+    public final qx1 a() {
+        kx.a(2, "expectedValuesPerKey");
+        return new qx1(this);
+    }
+
+    public abstract Map b();
+}

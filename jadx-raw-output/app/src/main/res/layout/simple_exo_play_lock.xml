@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    android:clickable="false"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:layout_gravity="center_vertical"
+        android:id="@+id/exo_player_lock_btn_id"
+        android:padding="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:button="@drawable/toggle_lock"/>
+    <chuangyuan.ycj.videolibrary.widget.ExoDefaultTimeBar
+        android:layout_gravity="bottom"
+        android:id="@+id/exo_player_lock_progress"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_height="1dp"
+        app:buffered_color="@color/timeBar_buffered_color"
+        app:played_color="@color/timeBar_played_color"
+        app:scrubber_disabled_size="0dp"
+        app:scrubber_dragged_size="0dp"
+        app:scrubber_enabled_size="0dp"
+        app:touch_target_height="4dp"
+        app:unplayed_color="@color/timeBar_unplayed_color"/>
+</FrameLayout>

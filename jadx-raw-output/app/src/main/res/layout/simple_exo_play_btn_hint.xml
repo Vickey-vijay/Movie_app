@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@android:color/black"
+    android:clickable="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:id="@+id/exo_player_btn_hint_btn_id"
+        android:background="@drawable/btn_continue_drawable"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/exo_play_btn_hnt"
+        android:shadowColor="@color/simple_exo_style_Accent"
+        android:drawablePadding="5dp"/>
+</LinearLayout>

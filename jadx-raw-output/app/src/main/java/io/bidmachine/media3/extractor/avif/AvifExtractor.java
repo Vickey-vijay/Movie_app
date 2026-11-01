@@ -1,0 +1,62 @@
+package io.bidmachine.media3.extractor.avif;
+
+import io.bidmachine.media3.common.util.ParsableByteArray;
+import io.bidmachine.media3.common.util.UnstableApi;
+import io.bidmachine.media3.extractor.Extractor;
+import io.bidmachine.media3.extractor.ExtractorInput;
+import io.bidmachine.media3.extractor.ExtractorOutput;
+import io.bidmachine.media3.extractor.PositionHolder;
+import io.bidmachine.media3.extractor.SingleSampleExtractor;
+import java.io.IOException;
+import java.util.List;
+
+/* JADX INFO: loaded from: classes2.dex */
+@UnstableApi
+public final class AvifExtractor implements Extractor {
+    private static final int AVIF_FILE_SIGNATURE_PART_1 = 1718909296;
+    private static final int AVIF_FILE_SIGNATURE_PART_2 = 1635150182;
+    private static final int FILE_SIGNATURE_SEGMENT_LENGTH = 4;
+    private final ParsableByteArray scratch = new ParsableByteArray(4);
+    private final SingleSampleExtractor imageExtractor = new SingleSampleExtractor(-1, -1, "image/avif");
+
+    @Override // io.bidmachine.media3.extractor.Extractor
+    public /* bridge */ /* synthetic */ List getSniffFailureDetails() {
+        return super.getSniffFailureDetails();
+    }
+
+    @Override // io.bidmachine.media3.extractor.Extractor
+    public /* bridge */ /* synthetic */ Extractor getUnderlyingImplementation() {
+        return super.getUnderlyingImplementation();
+    }
+
+    @Override // io.bidmachine.media3.extractor.Extractor
+    public void release() {
+    }
+
+    @Override // io.bidmachine.media3.extractor.Extractor
+    public boolean sniff(ExtractorInput extractorInput) throws IOException {
+        extractorInput.advancePeekPosition(4);
+        return readAndCompareFourBytes(extractorInput, 1718909296) && readAndCompareFourBytes(extractorInput, AVIF_FILE_SIGNATURE_PART_2);
+    }
+
+    private boolean readAndCompareFourBytes(ExtractorInput extractorInput, int i10) throws IOException {
+        this.scratch.reset(4);
+        extractorInput.peekFully(this.scratch.getData(), 0, 4);
+        return this.scratch.readUnsignedInt() == ((long) i10);
+    }
+
+    @Override // io.bidmachine.media3.extractor.Extractor
+    public void init(ExtractorOutput extractorOutput) {
+        this.imageExtractor.init(extractorOutput);
+    }
+
+    @Override // io.bidmachine.media3.extractor.Extractor
+    public int read(ExtractorInput extractorInput, PositionHolder positionHolder) throws IOException {
+        return this.imageExtractor.read(extractorInput, positionHolder);
+    }
+
+    @Override // io.bidmachine.media3.extractor.Extractor
+    public void seek(long j10, long j11) {
+        this.imageExtractor.seek(j10, j11);
+    }
+}

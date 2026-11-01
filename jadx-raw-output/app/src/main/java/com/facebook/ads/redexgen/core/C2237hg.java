@@ -1,0 +1,44 @@
+package com.facebook.ads.redexgen.core;
+
+import com.facebook.ads.AdError;
+
+/* JADX INFO: renamed from: com.facebook.ads.redexgen.X.hg, reason: case insensitive filesystem */
+/* JADX INFO: loaded from: assets/audience_network.dex */
+public class C2237hg implements S7 {
+    public final /* synthetic */ AbstractC2252hy A00;
+    public final /* synthetic */ NG A01;
+    public final /* synthetic */ NH A02;
+    public final /* synthetic */ C1977dL A03;
+    public final /* synthetic */ boolean A04;
+
+    public C2237hg(NH nh2, C1977dL c1977dL, boolean z10, AbstractC2252hy abstractC2252hy, NG ng2) {
+        this.A02 = nh2;
+        this.A03 = c1977dL;
+        this.A04 = z10;
+        this.A00 = abstractC2252hy;
+        this.A01 = ng2;
+    }
+
+    private void A00(boolean z10) {
+        if (z10) {
+            if (U7.A1l(this.A03) && this.A04) {
+                this.A02.A02.add(AbstractC1889bu.A01(this.A03, this.A00, 1, new C2238hh(this)));
+                return;
+            } else {
+                this.A01.ACG();
+                return;
+            }
+        }
+        this.A01.ACF(AdError.CACHE_ERROR);
+    }
+
+    @Override // com.facebook.ads.redexgen.core.S7
+    public final void ACh() {
+        A00(false);
+    }
+
+    @Override // com.facebook.ads.redexgen.core.S7
+    public final void ACq() {
+        A00(true);
+    }
+}

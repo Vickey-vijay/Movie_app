@@ -1,0 +1,21 @@
+package yads;
+
+/* JADX INFO: loaded from: classes2.dex */
+public final class bk {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final f73[] f75849a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public mx0 f75850b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public int f75851c;
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public int f75852d = 0;
+
+    public bk(int i10) {
+        this.f75849a = new f73[i10];
+    }
+}

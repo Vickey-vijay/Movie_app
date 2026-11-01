@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:tag="layout/item_home_content_multiple_category_list_0"
+    android:background="@color/theme_bg_color"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list"
+        android:tag="binding_1"
+        android:paddingLeft="@dimen/dp_8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_53"
+        android:layout_centerVertical="true"
+        android:nestedScrollingEnabled="false"/>
+    <RelativeLayout
+        android:background="@drawable/ic_home_channel_filter_bg"
+        android:layout_width="@dimen/dp_82"
+        android:layout_height="@dimen/dp_50"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+        <TextView
+            android:textSize="@dimen/sp_13"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:tag="binding_2"
+            android:paddingLeft="@dimen/dp_10"
+            android:layout_width="@dimen/dp_63"
+            android:layout_height="@dimen/dp_45"
+            android:text="筛选"
+            android:drawableLeft="@drawable/ic_home_channel_filter"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</RelativeLayout>

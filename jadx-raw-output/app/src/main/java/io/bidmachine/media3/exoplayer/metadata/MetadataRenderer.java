@@ -1,0 +1,242 @@
+package io.bidmachine.media3.exoplayer.metadata;
+
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import androidx.annotation.Nullable;
+import io.bidmachine.media3.common.Format;
+import io.bidmachine.media3.common.Metadata;
+import io.bidmachine.media3.common.util.Assertions;
+import io.bidmachine.media3.common.util.UnstableApi;
+import io.bidmachine.media3.common.util.Util;
+import io.bidmachine.media3.exoplayer.BaseRenderer;
+import io.bidmachine.media3.exoplayer.ExoPlaybackException;
+import io.bidmachine.media3.exoplayer.FormatHolder;
+import io.bidmachine.media3.exoplayer.RendererCapabilities;
+import io.bidmachine.media3.exoplayer.source.MediaSource;
+import io.bidmachine.media3.extractor.metadata.MetadataDecoder;
+import io.bidmachine.media3.extractor.metadata.MetadataInputBuffer;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
+/* JADX INFO: loaded from: classes10.dex */
+@UnstableApi
+public final class MetadataRenderer extends BaseRenderer implements Handler.Callback {
+    private static final int MSG_INVOKE_RENDERER = 1;
+    private static final String TAG = "MetadataRenderer";
+    private final MetadataInputBuffer buffer;
+
+    @Nullable
+    private MetadataDecoder decoder;
+    private final MetadataDecoderFactory decoderFactory;
+    private boolean inputStreamEnded;
+    private final MetadataOutput output;
+
+    @Nullable
+    private final Handler outputHandler;
+    private final boolean outputMetadataEarly;
+    private boolean outputStreamEnded;
+    private long outputStreamOffsetUs;
+
+    @Nullable
+    private Metadata pendingMetadata;
+    private long subsampleOffsetUs;
+
+    public MetadataRenderer(MetadataOutput metadataOutput, @Nullable Looper looper) {
+        this(metadataOutput, looper, MetadataDecoderFactory.DEFAULT);
+    }
+
+    private void decodeWrappedMetadata(Metadata metadata, List<Metadata.Entry> list) {
+        for (int i10 = 0; i10 < metadata.length(); i10++) {
+            Format wrappedMetadataFormat = metadata.get(i10).getWrappedMetadataFormat();
+            if (wrappedMetadataFormat == null || !this.decoderFactory.supportsFormat(wrappedMetadataFormat)) {
+                list.add(metadata.get(i10));
+            } else {
+                MetadataDecoder metadataDecoderCreateDecoder = this.decoderFactory.createDecoder(wrappedMetadataFormat);
+                byte[] bArr = (byte[]) Assertions.checkNotNull(metadata.get(i10).getWrappedMetadataBytes());
+                this.buffer.clear();
+                this.buffer.ensureSpaceForWrite(bArr.length);
+                ((ByteBuffer) Util.castNonNull(this.buffer.data)).put(bArr);
+                this.buffer.flip();
+                Metadata metadataDecode = metadataDecoderCreateDecoder.decode(this.buffer);
+                if (metadataDecode != null) {
+                    decodeWrappedMetadata(metadataDecode, list);
+                }
+            }
+        }
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer, io.bidmachine.media3.exoplayer.Renderer
+    public /* bridge */ /* synthetic */ void enableMayRenderStartOfStream() {
+        super.enableMayRenderStartOfStream();
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer, io.bidmachine.media3.exoplayer.Renderer
+    public /* bridge */ /* synthetic */ long getDurationToProgressUs(long j10, long j11) {
+        return super.getDurationToProgressUs(j10, j11);
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer, io.bidmachine.media3.exoplayer.Renderer, io.bidmachine.media3.exoplayer.RendererCapabilities
+    public String getName() {
+        return TAG;
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer, io.bidmachine.media3.exoplayer.Renderer
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer
+    public void onDisabled() {
+        this.pendingMetadata = null;
+        this.decoder = null;
+        this.outputStreamOffsetUs = -9223372036854775807L;
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer
+    public void onPositionReset(long j10, boolean z10) {
+        this.pendingMetadata = null;
+        this.inputStreamEnded = false;
+        this.outputStreamEnded = false;
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer, io.bidmachine.media3.exoplayer.Renderer
+    public void render(long j10, long j11) {
+        boolean zOutputMetadata = true;
+        while (zOutputMetadata) {
+            readMetadata();
+            zOutputMetadata = outputMetadata(j10);
+        }
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer, io.bidmachine.media3.exoplayer.Renderer
+    public /* bridge */ /* synthetic */ void setPlaybackSpeed(float f10, float f11) throws ExoPlaybackException {
+        super.setPlaybackSpeed(f10, f11);
+    }
+
+    public MetadataRenderer(MetadataOutput metadataOutput, @Nullable Looper looper, MetadataDecoderFactory metadataDecoderFactory) {
+        this(metadataOutput, looper, metadataDecoderFactory, false);
+    }
+
+    private void invokeRenderer(Metadata metadata) {
+        Handler handler = this.outputHandler;
+        if (handler != null) {
+            handler.obtainMessage(1, metadata).sendToTarget();
+        } else {
+            invokeRendererInternal(metadata);
+        }
+    }
+
+    private void invokeRendererInternal(Metadata metadata) {
+        this.output.onMetadata(metadata);
+    }
+
+    private boolean outputMetadata(long j10) {
+        boolean z10;
+        Metadata metadata = this.pendingMetadata;
+        if (metadata == null || (!this.outputMetadataEarly && metadata.presentationTimeUs > getPresentationTimeUs(j10))) {
+            z10 = false;
+        } else {
+            invokeRenderer(this.pendingMetadata);
+            this.pendingMetadata = null;
+            z10 = true;
+        }
+        if (this.inputStreamEnded && this.pendingMetadata == null) {
+            this.outputStreamEnded = true;
+        }
+        return z10;
+    }
+
+    private void readMetadata() {
+        if (this.inputStreamEnded || this.pendingMetadata != null) {
+            return;
+        }
+        this.buffer.clear();
+        FormatHolder formatHolder = getFormatHolder();
+        int source = readSource(formatHolder, this.buffer, 0);
+        if (source != -4) {
+            if (source == -5) {
+                this.subsampleOffsetUs = ((Format) Assertions.checkNotNull(formatHolder.format)).subsampleOffsetUs;
+                return;
+            }
+            return;
+        }
+        if (this.buffer.isEndOfStream()) {
+            this.inputStreamEnded = true;
+            return;
+        }
+        if (this.buffer.timeUs >= getLastResetPositionUs()) {
+            MetadataInputBuffer metadataInputBuffer = this.buffer;
+            metadataInputBuffer.subsampleOffsetUs = this.subsampleOffsetUs;
+            metadataInputBuffer.flip();
+            Metadata metadataDecode = ((MetadataDecoder) Util.castNonNull(this.decoder)).decode(this.buffer);
+            if (metadataDecode != null) {
+                ArrayList arrayList = new ArrayList(metadataDecode.length());
+                decodeWrappedMetadata(metadataDecode, arrayList);
+                if (arrayList.isEmpty()) {
+                    return;
+                }
+                this.pendingMetadata = new Metadata(getPresentationTimeUs(this.buffer.timeUs), arrayList);
+            }
+        }
+    }
+
+    @Override // android.os.Handler.Callback
+    public boolean handleMessage(Message message) {
+        if (message.what != 1) {
+            throw new IllegalStateException();
+        }
+        invokeRendererInternal((Metadata) message.obj);
+        return true;
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer, io.bidmachine.media3.exoplayer.Renderer
+    public boolean isEnded() {
+        return this.outputStreamEnded;
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer
+    public void onStreamChanged(Format[] formatArr, long j10, long j11, MediaSource.MediaPeriodId mediaPeriodId) {
+        this.decoder = this.decoderFactory.createDecoder(formatArr[0]);
+        Metadata metadata = this.pendingMetadata;
+        if (metadata != null) {
+            this.pendingMetadata = metadata.copyWithPresentationTimeUs((metadata.presentationTimeUs + this.outputStreamOffsetUs) - j11);
+        }
+        this.outputStreamOffsetUs = j11;
+    }
+
+    @Override // io.bidmachine.media3.exoplayer.BaseRenderer, io.bidmachine.media3.exoplayer.RendererCapabilities
+    public int supportsFormat(Format format) {
+        if (this.decoderFactory.supportsFormat(format)) {
+            return RendererCapabilities.create(format.cryptoType == 0 ? 4 : 2);
+        }
+        return RendererCapabilities.create(0);
+    }
+
+    public MetadataRenderer(MetadataOutput metadataOutput, @Nullable Looper looper, MetadataDecoderFactory metadataDecoderFactory, boolean z10) {
+        super(5);
+        this.output = (MetadataOutput) Assertions.checkNotNull(metadataOutput);
+        this.outputHandler = looper == null ? null : Util.createHandler(looper, this);
+        this.decoderFactory = (MetadataDecoderFactory) Assertions.checkNotNull(metadataDecoderFactory);
+        this.outputMetadataEarly = z10;
+        this.buffer = new MetadataInputBuffer();
+        this.outputStreamOffsetUs = -9223372036854775807L;
+    }
+
+    private long getPresentationTimeUs(long j10) {
+        boolean z10;
+        boolean z11 = true;
+        if (j10 != -9223372036854775807L) {
+            z10 = true;
+        } else {
+            z10 = false;
+        }
+        Assertions.checkState(z10);
+        if (this.outputStreamOffsetUs == -9223372036854775807L) {
+            z11 = false;
+        }
+        Assertions.checkState(z11);
+        return j10 - this.outputStreamOffsetUs;
+    }
+}

@@ -1,0 +1,16 @@
+package io.bidmachine.media3.extractor.mp4;
+
+import io.bidmachine.media3.common.util.UnstableApi;
+import io.bidmachine.media3.extractor.SniffFailure;
+
+/* JADX INFO: loaded from: classes11.dex */
+@UnstableApi
+public final class IncorrectFragmentationSniffFailure implements SniffFailure {
+    public static final IncorrectFragmentationSniffFailure FILE_FRAGMENTED = new IncorrectFragmentationSniffFailure(true);
+    public static final IncorrectFragmentationSniffFailure FILE_NOT_FRAGMENTED = new IncorrectFragmentationSniffFailure(false);
+    public final boolean fileIsFragmented;
+
+    private IncorrectFragmentationSniffFailure(boolean z10) {
+        this.fileIsFragmented = z10;
+    }
+}

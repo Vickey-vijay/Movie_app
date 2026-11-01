@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tag="layout/item_home_recommend_multiple_slide_0"
+    android:background="@color/theme_bg_color"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_200">
+    <com.mgs.carparking.widgets.BannerView
+        android:id="@+id/home_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"/>
+</RelativeLayout>

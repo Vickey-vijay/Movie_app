@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/dp_13"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.ruffian.library.widget.RTextView
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:id="@+id/text1"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_actor"
+        android:paddingVertical="@dimen/dp_10"
+        app:background_normal="@color/color_343940"
+        app:corner_radius="@dimen/dp_5"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
