@@ -35,17 +35,37 @@ P2P/jiagu engine.
   signature). Android will not install it over the original: **uninstall the original first**
   (local downloads and cache are lost; the account is server-side). Anyone can sign with that key, so
   do not treat it as a secret. If you ever share the APK, make a private key instead.
-* The native P2P engine (`libjiagu_sdk_pp_hlsProtected.so`) is a 360-jiagu-protected black box. If it
-  verifies the app signature, P2P-hosted videos could fail on this build. The emulator smoke test
-  cannot prove that either way; play one video on a real phone to be sure.
+* **P2P engine does not start unless the app is signed with the original key (verified).** The native
+  engine (`libjiagu_sdk_pp_hlsProtected.so` / `libpp_hls.so`) returns port `-1` for *any* APK not signed with
+  the original self-made `flickverse` key (cert MD5 `099656628B5CF75B43B04EECE0E62FA4`), even the original code
+  byte-for-byte re-signed. So on this build P2P-flagged videos and in-app downloads (which go through
+  `127.0.0.1:<port>`) are expected to fail; episodes with a direct `orginal_url` should play. The fix is to sign
+  with the original keystore (see "Signing with the original key" below).
 * Verified so far by: the patch tool's own shape checks, a byte-diff against the original (only the
   intended bytes differ, plus the DEX checksum/SHA-1 fields), signature verification and alignment
   checks. An emulator smoke test of original vs patched runs in CI; its result is recorded in the
   section below once it has run. **Not** verified on a physical phone.
 
-## Smoke-test result
+## Smoke-test result (GitHub Actions, Android emulator with ARM translation)
 
-_Pending: not run yet._
+* **Launch test**, original vs patched, 75 s each: API 30 (Google APIs), API 30 (Play) and API 34 (Play) all
+  PASS - both alive, 0 fatal exceptions; ad-SDK log lines **159 vs 0**. API 33 (Play) fails early and is
+  inconclusive (the original does not run there either).
+* **UI walk** (API 30): Home / Categories / Promotion / Me / search behave identically; the original shows real
+  in-feed native ads (a gambling ad on Home, a shopping ad on Search, "Ad / INSTALL" banners) which are gone in the
+  patched build. Searching "Malayalam" returns real Malayalam titles in both builds.
+* **P2P engine**: original -> port 7000 with a socket listening; patched -> `-1`; original code re-signed with the
+  throw-away key -> `-1` (twice). Cause = the signing key, not the code edit.
+* **Not verified**: actual video playback and downloads (the walk never pressed *Play now*), and anything on a
+  physical phone.
+
+## Signing with the original key (fixes P2P, and lets the APK update the installed app in place)
+
+The original was signed with a self-made key: `CN=flickverse` (all fields), created 2025-11-14, cert MD5
+`099656628B5CF75B43B04EECE0E62FA4`. If you still have that keystore (`*.jks`, `*.keystore`, `*.p12`), add it as
+**repository secrets** (never commit it): `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS` (default
+`flickverse`) and optionally `KEY_PASSWORD`. The workflows then sign with it and the build **fails** unless the
+resulting certificate MD5 matches the original.
 
 ## Rebuild
 

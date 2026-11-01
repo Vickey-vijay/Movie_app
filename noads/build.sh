@@ -7,7 +7,9 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; ROOT="$(cd "$HERE/.." && pwd)"
 APK_IN="${APK_IN:-$ROOT/apk-original/Moviecom.fvvcl.flickversevV4.0.0.apk}"
 WORK="${WORK:-$ROOT/build/work}"; OUT="${OUT:-$ROOT/build/Flickverse-V4.0.0-noads.apk}"
-KS="${KS:-$HERE/signing/flickverse-personal.p12}"; KS_PASS="${KS_PASS:-flickverse}"; KS_ALIAS="${KS_ALIAS:-flickverse}"
+KS="${KS:-$HERE/signing/flickverse-personal.p12}"; KS_PASS="${KS_PASS:-flickverse}"; KS_ALIAS="${KS_ALIAS:-flickverse}"; KS_KEY_PASS="${KS_KEY_PASS:-$KS_PASS}"
+# If EXPECT_CERT_MD5 is set (the workflow sets it when the ORIGINAL keystore is supplied as a secret), the build
+# fails unless the APK ends up signed by exactly that certificate.
 EXP="--add-exports java.base/sun.security.x509=ALL-UNNAMED --add-exports java.base/sun.security.pkcs=ALL-UNNAMED --add-exports java.base/sun.security.util=ALL-UNNAMED"
 mkdir -p "$WORK" "$(dirname "$OUT")"; rm -rf "$WORK/dex-in" "$WORK/dex-out" "$WORK/classes"; mkdir -p "$WORK/dex-in" "$WORK/classes"
 
@@ -31,9 +33,14 @@ python3 -I "$HERE/tools/repack.py" "$APK_IN" "$WORK/dex-out" "$WORK/unsigned.apk
 echo "== 5/6 sign"
 rm -f "$OUT"
 if command -v apksigner >/dev/null 2>&1; then
-  apksigner sign --ks "$KS" --ks-pass "pass:$KS_PASS" --ks-key-alias "$KS_ALIAS" --min-sdk-version 24 \
+  apksigner sign --ks "$KS" --ks-pass "pass:$KS_PASS" --ks-key-alias "$KS_ALIAS" --key-pass "pass:$KS_KEY_PASS" --min-sdk-version 24 \
     --v1-signing-enabled false --v2-signing-enabled true --v3-signing-enabled true --out "$OUT" "$WORK/unsigned.apk"
   apksigner verify --min-sdk-version 24 --verbose "$OUT" | head -6
+  cert_md5=$(apksigner verify --print-certs "$OUT" | grep -i 'certificate MD5 digest' | head -1 | awk '{print toupper($NF)}')
+  echo "signing certificate MD5: $cert_md5  (original app's key: 099656628B5CF75B43B04EECE0E62FA4)"
+  if [ -n "${EXPECT_CERT_MD5:-}" ] && [ "$cert_md5" != "$EXPECT_CERT_MD5" ]; then
+    echo "ERROR: signed with a different key than expected ($EXPECT_CERT_MD5). Wrong keystore/alias?"; exit 1
+  fi
 else
   java $EXP -cp "$WORK/classes:$WORK/lib/*" Sign "$KS" "$KS_PASS" "$KS_ALIAS" "$WORK/unsigned.apk" "$OUT" 2>&1 | grep -v 'Picked up'
   java $EXP -cp "$WORK/classes:$WORK/lib/*" Verify "$OUT" 2>&1 | grep -v 'Picked up'

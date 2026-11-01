@@ -27,6 +27,24 @@ jobs:
         with: { distribution: temurin, java-version: '17' }
       - name: Put Android build-tools (apksigner) on PATH
         run: echo "$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)" >> "$GITHUB_PATH"
+      - name: Use the ORIGINAL signing key if it is stored as repository secrets
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/original.keystore"
+            {
+              echo "KS=$RUNNER_TEMP/original.keystore"; echo "KS_PASS=$KEYSTORE_PASSWORD"
+              echo "KS_ALIAS=${KEY_ALIAS:-flickverse}"; echo "KS_KEY_PASS=${KEY_PASSWORD:-$KEYSTORE_PASSWORD}"
+              echo "EXPECT_CERT_MD5=099656628B5CF75B43B04EECE0E62FA4"
+            } >> "$GITHUB_ENV"
+            echo "Signing with the ORIGINAL keystore from repository secrets."
+          else
+            echo "No KEYSTORE_BASE64 secret: signing with the throw-away key (the native P2P engine will NOT start)."
+          fi
       - name: Build, sign, check
         run: bash noads/build.sh
       - uses: actions/upload-artifact@v4
@@ -97,6 +115,8 @@ jobs:
 
           **Install:** uninstall the original app first (this build has a different signature, so Android refuses to update over it), then install this APK.
           Personal-use build, signed with the throw-away key in noads/signing/.
+
+          **Known limitation:** unless it was signed with the original app key, the app's native P2P engine does not start (verified on an emulator), so P2P-hosted videos and in-app downloads may not work. Ordinary streams are expected to play. See noads/README.md.
 
           **Status:** structure/signature/alignment checks pass. Emulator smoke test result: \`${SMOKE}\` (details: ${run_url}). Not yet confirmed on a physical phone.
 
