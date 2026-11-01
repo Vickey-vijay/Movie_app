@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # control (original APK) first, then the patched APK, on the same emulator. Prints a VERDICT and
-# exits 0 = pass, 1 = patched app is worse than the original, 3 = inconclusive (control cannot run).
+# exits 0 = pass or inconclusive (a ::warning:: annotation marks inconclusive), 1 = patched app is worse than the original.
 ORIG="${ORIG:-apk-original/Moviecom.fvvcl.flickversevV4.0.0.apk}"
 PATCHED="${PATCHED:-build/Flickverse-V4.0.0-noads.apk}"
 rm -rf smoke-out; mkdir -p smoke-out; adb wait-for-device
@@ -10,7 +10,10 @@ bash noads/ci/smoke.sh noads "$PATCHED" 75
 echo; echo "================ SUMMARY ================"; cat smoke-out/results.txt
 get() { grep "^RESULT\[$1\]" smoke-out/results.txt | head -1 | tr ' ' '\n' | grep "^$2=" | head -1 | cut -d= -f2; }
 oi=$(get original install); ni=$(get noads install)
-if [ "$oi" != OK ]; then echo "VERDICT: INCONCLUSIVE - the unmodified original cannot be installed/run on this emulator image"; exit 3; fi
+if [ "$oi" != OK ]; then
+  echo "::warning title=Smoke test inconclusive::the unmodified original cannot be installed/run on this emulator image, so nothing was tested here"
+  echo "VERDICT: INCONCLUSIVE - the unmodified original cannot be installed/run on this emulator image"; exit 0
+fi
 if [ "$ni" != OK ]; then echo "VERDICT: FAIL - the patched APK does not install"; exit 1; fi
 oa=$(get original alive); na=$(get noads alive); of=$(get original fatal_exceptions); nf=$(get noads fatal_exceptions)
 if [ "$oa" = yes ] && [ "$na" != yes ]; then echo "VERDICT: FAIL - patched app died, original stayed alive"; exit 1; fi

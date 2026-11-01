@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Guided walk through the app on a booted emulator, for the ORIGINAL and the PATCHED apk:
+# Home (+ scroll the channel tabs), Categories, Promotion, Me, then open a movie and let it play.
+# Prints what is on screen at each step plus crash / native-library / player log evidence.
+set -u
+PKG=com.fvvcl.flickverse; ACT="$PKG/com.mgs.carparking.ui.login.splash.SplashActivity"
+T="python3 noads/ci/uitool.py"; out=explore-out; mkdir -p "$out"
+walk() {
+  label=$1; apk=$2
+  echo; echo "################ WALK [$label] ################"
+  adb uninstall "$PKG" >/dev/null 2>&1
+  adb install -r -g "$apk" 2>&1 | grep -q Success || { echo "install failed"; return; }
+  adb logcat -c; adb shell am start -W -n "$ACT" >/dev/null 2>&1; sleep 50
+  $T tap "Ok" exact >/dev/null 2>&1 && sleep 8          # first-run "App Language" dialog, if shown
+  echo "--- HOME:";        $T texts
+  y=$($T rowy Recommend 2>/dev/null)
+  if [ -n "${y:-}" ]; then for i in 1 2 3 4 5; do $T swipe-row "$y"; sleep 1; echo "--- HOME channel tabs, scroll $i:"; $T texts; done; fi
+  adb exec-out screencap -p > "$out/$label.home.png"
+  $T tap "Categories" >/dev/null && sleep 8 && { echo "--- CATEGORIES:"; $T texts; adb exec-out screencap -p > "$out/$label.categories.png"; }
+  $T tap "Promotion" >/dev/null && sleep 8 && { echo "--- PROMOTION:"; $T texts; }
+  $T tap "Me" exact >/dev/null && sleep 6 && { echo "--- ME:"; $T texts; }
+  $T tap "Home" exact >/dev/null; sleep 5
+  below=${y:-300}; $T tap-card "$((below + 40))" && sleep 12
+  echo "--- MOVIE PAGE:"; $T texts; adb exec-out screencap -p > "$out/$label.detail.png"
+  sleep 30
+  echo "--- MOVIE PAGE after 30s of playback:"; $T texts; adb exec-out screencap -p > "$out/$label.playing.png"
+  adb logcat -d -v threadtime > "$out/$label.logcat.txt"
+  echo "--- evidence: alive=$([ -n "$(adb shell pidof $PKG | tr -d '\r')" ] && echo yes || echo NO)" \
+       "fatal=$(grep -c 'FATAL EXCEPTION' "$out/$label.logcat.txt")" \
+       "anr=$(grep -c 'ANR in' "$out/$label.logcat.txt")" \
+       "unsatisfiedLink=$(grep -c UnsatisfiedLinkError "$out/$label.logcat.txt")" \
+       "sigsegv=$(grep -c 'SIGSEGV\|Fatal signal' "$out/$label.logcat.txt")" \
+       "adSdkLogLines=$(grep -ciE 'OKT_SDK|AppLovin|MobileAds|UnityAds|Vungle|IronSource|BidMachine|BigoAds|MBridge|AudienceNetwork|AppMetrica' "$out/$label.logcat.txt")"
+  echo "--- player/P2P log lines (first 6):"; grep -iE 'ijk|exoplayer|MediaCodec|hls|p2p|pp_hls|port' "$out/$label.logcat.txt" | grep -v 'AppMetrica' | head -6 | cut -c1-170
+  grep -m1 -A10 'FATAL EXCEPTION' "$out/$label.logcat.txt" | cut -c1-170
+}
+adb wait-for-device
+echo "emulator: sdk=$(adb shell getprop ro.build.version.sdk | tr -d '\r') abilist=$(adb shell getprop ro.product.cpu.abilist | tr -d '\r')"
+walk original "${ORIG:-apk-original/Moviecom.fvvcl.flickversevV4.0.0.apk}"
+walk noads "${PATCHED:-build/Flickverse-V4.0.0-noads.apk}"
