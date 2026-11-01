@@ -1,10 +1,13 @@
 name: noads-explore
 
-# Manual only. Builds the no-ads APK, then walks the ORIGINAL and the PATCHED app through
+# Manual (or on changes to the walk). Builds the no-ads APK, then walks the ORIGINAL and the PATCHED app through
 # Home -> Categories -> Promotion -> Me -> open a movie -> playback on an emulator that can run
 # ARM apps, and prints what is on screen plus crash / native-library / player evidence.
 on:
   workflow_dispatch:
+  push:                     # also runs when the walk itself changes (this is what registers the workflow)
+    branches: [recovered-source]
+    paths: ['noads/ci/explore.sh', 'noads/ci/uitool.py', '.github/workflows/noads-explore.yml']
 
 permissions:
   contents: read
